@@ -210,4 +210,18 @@ router.post('/', (req, res) => {
   res.json({ success: true, path: profilePath });
 });
 
+// POST /api/profile/cv — upload CV text (markdown)
+router.post('/cv', (req, res) => {
+  const { content } = req.body;
+  if (!content || typeof content !== 'string') {
+    return res.status(400).json({ error: 'CV content is required' });
+  }
+  const cvPath = getCvPath();
+  mkdirSync(dirname(cvPath), { recursive: true });
+  writeFileSync(cvPath, content);
+  // Clear parse cache so next GET re-parses
+  cvParseCache = { hash: null, result: null };
+  res.json({ success: true });
+});
+
 export default router;

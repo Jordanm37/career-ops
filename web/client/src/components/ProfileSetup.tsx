@@ -6,12 +6,15 @@ interface Props {
   onClose: () => void;
 }
 
-const STEPS = ['Personal', 'Target Roles', 'Narrative', 'Compensation', 'Location'] as const;
+const STEPS = ['CV Upload', 'Personal', 'Target Roles', 'Narrative', 'Compensation', 'Location'] as const;
 
 export default function ProfileSetup({ onComplete, onClose }: Props) {
   const [step, setStep] = useState(0);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [hasCv, setHasCv] = useState<boolean | null>(null);
+  const [cvText, setCvText] = useState('');
+  const [uploading, setUploading] = useState(false);
 
   const [form, setForm] = useState<ProfileData>({
     full_name: '',
@@ -36,9 +39,13 @@ export default function ProfileSetup({ onComplete, onClose }: Props) {
     visa_status: '',
   });
 
-  // Pre-fill from CV data on mount
+  // Check CV status and pre-fill from CV data on mount
   useEffect(() => {
     fetchProfileStatus().then(status => {
+      setHasCv(status.hasCv);
+      if (status.hasCv) {
+        setStep(1); // skip CV upload step
+      }
       const parsed = (status as any).cvParsed;
       if (parsed) {
         setForm(prev => ({
@@ -95,9 +102,68 @@ export default function ProfileSetup({ onComplete, onClose }: Props) {
     );
   }
 
+  async function handleCvUpload() {
+    if (!cvText.trim()) return;
+    setUploading(true);
+    setError(null);
+    try {
+      const res = await fetch('/api/profile/cv', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ content: cvText }),
+      });
+      if (!res.ok) throw new Error('Upload failed');
+      // Re-fetch profile to get parsed CV fields
+      const status = await fetchProfileStatus();
+      setHasCv(true);
+      const parsed = (status as any).cvParsed;
+      if (parsed) {
+        setForm(prev => ({
+          ...prev,
+          ...Object.fromEntries(
+            Object.entries(parsed).filter(([, v]) => v)
+          ),
+        }));
+      }
+      setStep(1);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'CV upload failed');
+    } finally {
+      setUploading(false);
+    }
+  }
+
   function renderStep() {
     switch (step) {
-      case 0: // Personal
+      case 0: // CV Upload
+        return (
+          <div className="space-y-3">
+            <p className="text-sm text-ctp-subtext1 mb-2">
+              Paste your CV/resume below (markdown or plain text). This will be used to auto-fill your profile and tailor job evaluations.
+            </p>
+            <textarea
+              value={cvText}
+              onChange={e => setCvText(e.target.value)}
+              placeholder="# Your Name&#10;&#10;**Email:** you@example.com | **Phone:** +1 234 567 890&#10;&#10;Paste your full CV here..."
+              rows={14}
+              className="w-full bg-ctp-surface0 border border-ctp-surface1 rounded-lg px-3 py-2 text-ctp-text placeholder:text-ctp-overlay0 focus:outline-none focus:border-ctp-blue font-mono text-sm resize-y"
+            />
+            <button
+              onClick={handleCvUpload}
+              disabled={!cvText.trim() || uploading}
+              className="w-full px-4 py-2 bg-ctp-blue text-ctp-crust font-medium rounded-lg hover:opacity-90 transition-opacity disabled:opacity-40"
+            >
+              {uploading ? 'Uploading & parsing...' : 'Upload CV & Continue'}
+            </button>
+            {hasCv === false && (
+              <p className="text-xs text-ctp-overlay0 text-center">
+                No CV found. Upload one to auto-fill your profile.
+              </p>
+            )}
+          </div>
+        );
+
+      case 1: // Personal
         return (
           <div className="space-y-3">
             <p className="text-sm text-ctp-subtext1 mb-4">
@@ -113,7 +179,7 @@ export default function ProfileSetup({ onComplete, onClose }: Props) {
           </div>
         );
 
-      case 1: // Target Roles
+      case 2: // Target Roles
         return (
           <div className="space-y-3">
             <p className="text-sm text-ctp-subtext1 mb-4">
@@ -139,7 +205,7 @@ export default function ProfileSetup({ onComplete, onClose }: Props) {
           </div>
         );
 
-      case 2: // Narrative
+      case 3: // Narrative
         return (
           <div className="space-y-3">
             <p className="text-sm text-ctp-subtext1 mb-4">
@@ -159,7 +225,7 @@ export default function ProfileSetup({ onComplete, onClose }: Props) {
           </div>
         );
 
-      case 3: // Compensation
+      case 4: // Compensation
         return (
           <div className="space-y-3">
             <p className="text-sm text-ctp-subtext1 mb-4">
@@ -176,7 +242,7 @@ export default function ProfileSetup({ onComplete, onClose }: Props) {
           </div>
         );
 
-      case 4: // Location
+      case 5: // Location
         return (
           <div className="space-y-3">
             <p className="text-sm text-ctp-subtext1 mb-4">
