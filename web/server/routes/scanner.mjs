@@ -93,7 +93,7 @@ router.patch('/discovered/:id', (req, res) => {
 
 // GET /api/scan/portals — list configured portals
 router.get('/portals', (req, res) => {
-  const { trackedCompanies, titleFilter, searchQueries } = loadPortals();
+  const { trackedCompanies, titleFilter, searchQueries, profileMerged } = loadPortals();
   res.json({
     companies: trackedCompanies.map(c => ({
       name: c.name,
@@ -103,6 +103,7 @@ router.get('/portals', (req, res) => {
     })),
     titleFilter,
     queryCount: searchQueries.length,
+    profileMerged,
   });
 });
 

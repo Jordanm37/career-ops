@@ -28,6 +28,7 @@ interface PortalInfo {
   companies: { name: string; careers_url: string; hasApi: boolean; scanMethod: string }[];
   titleFilter: { positive: string[]; negative: string[]; seniority_boost: string[] };
   queryCount: number;
+  profileMerged: boolean;
 }
 
 const EMPTY_STATS: ScanStats = {
@@ -417,6 +418,12 @@ export default function Scanner({ onClose }: ScannerProps) {
                     <div className="flex justify-between text-xs">
                       <span className="text-ctp-subtext0">Search queries</span>
                       <span className="text-ctp-text font-medium tabular-nums">{portals.queryCount}</span>
+                    </div>
+                    <div className="flex justify-between text-xs">
+                      <span className="text-ctp-subtext0">Profile keywords</span>
+                      <span className={`font-medium ${portals.profileMerged ? 'text-ctp-green' : 'text-ctp-overlay0'}`}>
+                        {portals.profileMerged ? 'Active' : 'No profile'}
+                      </span>
                     </div>
                   </>
                 ) : (
