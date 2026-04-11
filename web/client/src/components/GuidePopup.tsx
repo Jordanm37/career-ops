@@ -2,28 +2,28 @@ import { useState } from 'react';
 
 const sections = [
   {
+    title: 'Scan for Jobs',
+    text: 'Click "Scan Jobs" to automatically discover open positions across 76 companies. The scanner checks Greenhouse APIs and crawls career pages (Ashby, Lever, etc.), filters by your target keywords, and deduplicates. Queue promising finds for evaluation.',
+  },
+  {
     title: 'Evaluate a Job',
-    text: 'Click "+ Evaluate" in the header, paste a job description or URL, and the AI will score it against your CV and profile. Results appear in the pipeline table.',
+    text: 'Click "+ Evaluate" to paste a job description or URL. The AI scores it against your CV and profile, generating a detailed report with archetype fit, compensation estimate, and remote policy.',
   },
   {
     title: 'Pipeline Table',
     text: 'All evaluated offers appear here. Click column headers to sort by Score, Date, Company, or Status. Click any row to open the full evaluation report.',
   },
   {
-    title: 'Filter Tabs',
-    text: 'Use the tabs above the table to filter by status — All, Evaluated, Applied, Interview, Top (score ≥ 4), or Skip.',
+    title: 'Filter & Sort',
+    text: 'Use the filter tabs to narrow by status (All, Evaluated, Applied, Interview, Top, Skip). Click column headers to change sort order.',
   },
   {
-    title: 'Change Status',
-    text: 'Each row has a status dropdown. Use it to track your progress: Evaluated → Applied → Interview → Offer → Accepted/Rejected.',
+    title: 'Track Progress',
+    text: 'Each row has a status dropdown to track where you are: Evaluated, Applied, Interview, Offer, Accepted, or Rejected.',
   },
   {
     title: 'Profile Setup',
-    text: 'Click "Profile" in the header to set up or edit your candidate profile. This helps the AI tailor evaluations to your target roles, archetypes, and preferences.',
-  },
-  {
-    title: 'Reports',
-    text: 'Click any row to open a detailed report with archetype fit, compensation estimate, remote policy, TL;DR, and a full breakdown of the role.',
+    text: 'Click "Profile" to set up your candidate profile. It auto-fills from your CV using AI. Your profile shapes how evaluations score job fit, archetypes, and compensation.',
   },
 ];
 
