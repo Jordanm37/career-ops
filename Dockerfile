@@ -13,6 +13,9 @@ RUN npm run build
 FROM node:24-slim AS production
 WORKDIR /app
 
+# Install build tools for native modules (better-sqlite3)
+RUN apt-get update && apt-get install -y python3 make g++ && rm -rf /var/lib/apt/lists/*
+
 # Install server dependencies
 COPY web/package.json web/package-lock.json* ./
 RUN npm install --omit=dev
