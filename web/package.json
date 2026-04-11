@@ -1,0 +1,24 @@
+{
+  "name": "career-ops-web",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"node server/index.mjs\" \"cd client && npx vite\"",
+    "dev:server": "node server/index.mjs",
+    "dev:client": "cd client && npx vite",
+    "build": "cd client && npx vite build",
+    "start": "node server/index.mjs",
+    "import": "node server/import.mjs"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.7.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "marked": "^15.0.0",
+    "openai": "^4.86.0"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  }
+}

@@ -16,6 +16,7 @@ jds/*
 !jds/.gitkeep
 
 # User config and customization (never auto-updated)
+cv.md
 config/profile.yml
 portals.yml
 modes/_profile.md
@@ -35,3 +36,9 @@ node_modules/
 .claude/settings.local.json
 .claude/memory/
 career-dashboard
+
+# Web dashboard
+web/data/
+web/node_modules/
+web/client/node_modules/
+web/client/dist/

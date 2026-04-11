@@ -1,0 +1,16 @@
+node_modules
+web/node_modules
+web/client/node_modules
+web/data
+.git
+dashboard
+docs
+examples
+jds
+output
+data
+reports
+batch/batch-state.tsv
+batch/batch-input.tsv
+batch/tracker-additions
+*.pdf
