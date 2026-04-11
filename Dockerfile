@@ -19,6 +19,7 @@ RUN apt-get update && apt-get install -y python3 make g++ && rm -rf /var/lib/apt
 # Install server dependencies
 COPY web/package.json web/package-lock.json* ./
 RUN npm install --omit=dev
+RUN npx playwright install --with-deps chromium
 
 # Copy server code
 COPY web/server/ server/
@@ -34,6 +35,7 @@ COPY config/ /career-ops/config/
 # Data directory for SQLite (use Railway volume for persistence)
 RUN mkdir -p /data
 
+ENV PLAYWRIGHT_BROWSERS_PATH=0
 ENV NODE_ENV=production
 ENV PORT=3000
 ENV CAREER_OPS_PATH=/career-ops

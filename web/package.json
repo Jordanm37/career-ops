@@ -16,7 +16,9 @@
     "cors": "^2.8.5",
     "express": "^5.1.0",
     "marked": "^15.0.0",
-    "openai": "^4.86.0"
+    "openai": "^4.86.0",
+    "playwright": "^1.52.0",
+    "yaml": "^2.8.3"
   },
   "devDependencies": {
     "concurrently": "^9.1.0"

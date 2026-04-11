@@ -7,6 +7,7 @@ import applicationsRouter from './routes/applications.mjs';
 import reportsRouter from './routes/reports.mjs';
 import evaluateRouter from './routes/evaluate.mjs';
 import profileRouter from './routes/profile.mjs';
+import scannerRouter from './routes/scanner.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -21,6 +22,7 @@ app.use('/api/applications', applicationsRouter);
 app.use('/api/applications', reportsRouter);
 app.use('/api/evaluate', evaluateRouter);
 app.use('/api/profile', profileRouter);
+app.use('/api/scan', scannerRouter);
 
 // Health check
 app.get('/api/health', (req, res) => {

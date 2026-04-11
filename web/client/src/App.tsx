@@ -6,6 +6,8 @@ import Pipeline from './components/Pipeline';
 import ReportPreview from './components/ReportPreview';
 import EvaluateForm from './components/EvaluateForm';
 import ProfileSetup from './components/ProfileSetup';
+import GuidePopup from './components/GuidePopup';
+import Scanner from './components/Scanner';
 
 export default function App() {
   const [apps, setApps] = useState<Application[]>([]);
@@ -16,6 +18,7 @@ export default function App() {
   const [showEvaluate, setShowEvaluate] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
   const [hasProfile, setHasProfile] = useState<boolean | null>(null);
+  const [showScanner, setShowScanner] = useState(false);
   const [loading, setLoading] = useState(true);
 
   const loadData = useCallback(async () => {
@@ -74,6 +77,12 @@ export default function App() {
             }`}
           >
             {hasProfile ? 'Profile' : 'Setup Profile'}
+          </button>
+          <button
+            onClick={() => setShowScanner(true)}
+            className="bg-ctp-teal text-ctp-crust px-4 py-1.5 rounded-lg text-sm font-medium hover:opacity-90 transition-opacity"
+          >
+            Scan Jobs
           </button>
           <button
             onClick={() => setShowEvaluate(true)}
@@ -146,6 +155,14 @@ export default function App() {
           onClose={() => setShowProfile(false)}
         />
       )}
+
+      {/* Scanner modal */}
+      {showScanner && (
+        <Scanner onClose={() => setShowScanner(false)} />
+      )}
+
+      {/* Help guide */}
+      <GuidePopup />
     </div>
   );
 }

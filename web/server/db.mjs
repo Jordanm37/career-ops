@@ -47,6 +47,45 @@ db.exec(`
   CREATE INDEX IF NOT EXISTS idx_applications_status ON applications(status);
   CREATE INDEX IF NOT EXISTS idx_applications_score ON applications(score);
   CREATE INDEX IF NOT EXISTS idx_applications_company ON applications(company);
+
+  CREATE TABLE IF NOT EXISTS scan_runs (
+    id INTEGER PRIMARY KEY,
+    started_at TEXT DEFAULT (datetime('now')),
+    completed_at TEXT,
+    status TEXT NOT NULL DEFAULT 'running',
+    level1_count INTEGER DEFAULT 0,
+    level2_count INTEGER DEFAULT 0,
+    discovered INTEGER DEFAULT 0,
+    filtered INTEGER DEFAULT 0,
+    duplicates INTEGER DEFAULT 0,
+    queued INTEGER DEFAULT 0,
+    error TEXT
+  );
+
+  CREATE TABLE IF NOT EXISTS discovered_jobs (
+    id INTEGER PRIMARY KEY,
+    scan_run_id INTEGER REFERENCES scan_runs(id),
+    url TEXT NOT NULL,
+    title TEXT NOT NULL,
+    company TEXT NOT NULL,
+    portal TEXT,
+    source TEXT NOT NULL,
+    seniority_boost INTEGER DEFAULT 0,
+    status TEXT NOT NULL DEFAULT 'new',
+    discovered_at TEXT DEFAULT (datetime('now')),
+    UNIQUE(url)
+  );
+
+  CREATE TABLE IF NOT EXISTS scan_history (
+    id INTEGER PRIMARY KEY,
+    url TEXT NOT NULL,
+    first_seen TEXT DEFAULT (date('now')),
+    portal TEXT,
+    title TEXT,
+    company TEXT,
+    status TEXT NOT NULL,
+    UNIQUE(url)
+  );
 `);
 
 // Prepared statements
@@ -95,6 +134,42 @@ const stmts = {
 
   checkDuplicate: db.prepare(`
     SELECT id FROM applications WHERE company = ? AND role = ?
+  `),
+
+  insertScanRun: db.prepare(`
+    INSERT INTO scan_runs (status) VALUES (?)
+  `),
+
+  updateScanRun: db.prepare(`
+    UPDATE scan_runs SET completed_at=datetime('now'), status=?, level1_count=?, level2_count=?, discovered=?, filtered=?, duplicates=?, queued=?, error=? WHERE id=?
+  `),
+
+  getLatestScanRun: db.prepare(`
+    SELECT * FROM scan_runs ORDER BY id DESC LIMIT 1
+  `),
+
+  insertDiscoveredJob: db.prepare(`
+    INSERT OR IGNORE INTO discovered_jobs (scan_run_id, url, title, company, portal, source, seniority_boost) VALUES (?,?,?,?,?,?,?)
+  `),
+
+  listDiscoveredJobs: db.prepare(`
+    SELECT * FROM discovered_jobs WHERE status=? ORDER BY seniority_boost DESC, discovered_at DESC
+  `),
+
+  updateDiscoveredJobStatus: db.prepare(`
+    UPDATE discovered_jobs SET status=? WHERE id=?
+  `),
+
+  insertScanHistory: db.prepare(`
+    INSERT OR IGNORE INTO scan_history (url, portal, title, company, status) VALUES (?,?,?,?,?)
+  `),
+
+  checkScanHistoryUrl: db.prepare(`
+    SELECT id FROM scan_history WHERE url=?
+  `),
+
+  checkDiscoveredUrl: db.prepare(`
+    SELECT id FROM discovered_jobs WHERE url=?
   `),
 };
 
@@ -192,6 +267,42 @@ export function getMetrics() {
 
 export function checkDuplicate(company, role) {
   return stmts.checkDuplicate.get(company, role);
+}
+
+export function insertScanRun(status = 'running') {
+  return stmts.insertScanRun.run(status);
+}
+
+export function updateScanRun(id, { status, level1_count, level2_count, discovered, filtered, duplicates, queued, error }) {
+  return stmts.updateScanRun.run(status, level1_count, level2_count, discovered, filtered, duplicates, queued, error, id);
+}
+
+export function getLatestScanRun() {
+  return stmts.getLatestScanRun.get();
+}
+
+export function insertDiscoveredJob(scan_run_id, url, title, company, portal, source, seniority_boost) {
+  return stmts.insertDiscoveredJob.run(scan_run_id, url, title, company, portal, source, seniority_boost);
+}
+
+export function listDiscoveredJobs(status = 'new') {
+  return stmts.listDiscoveredJobs.all(status);
+}
+
+export function updateDiscoveredJobStatus(id, status) {
+  return stmts.updateDiscoveredJobStatus.run(status, id);
+}
+
+export function insertScanHistory(url, portal, title, company, status) {
+  return stmts.insertScanHistory.run(url, portal, title, company, status);
+}
+
+export function checkScanHistoryUrl(url) {
+  return stmts.checkScanHistoryUrl.get(url);
+}
+
+export function checkDiscoveredUrl(url) {
+  return stmts.checkDiscoveredUrl.get(url);
 }
 
 export { db };
