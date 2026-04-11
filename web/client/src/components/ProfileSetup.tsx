@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { saveProfile, type ProfileData } from '../lib/api';
+import { useState, useEffect } from 'react';
+import { saveProfile, fetchProfileStatus, type ProfileData } from '../lib/api';
 
 interface Props {
   onComplete: () => void;
@@ -35,6 +35,21 @@ export default function ProfileSetup({ onComplete, onClose }: Props) {
     timezone: '',
     visa_status: '',
   });
+
+  // Pre-fill from CV data on mount
+  useEffect(() => {
+    fetchProfileStatus().then(status => {
+      const parsed = (status as any).cvParsed;
+      if (parsed) {
+        setForm(prev => ({
+          ...prev,
+          ...Object.fromEntries(
+            Object.entries(parsed).filter(([, v]) => v)
+          ),
+        }));
+      }
+    }).catch(() => {});
+  }, []);
 
   function update(field: keyof ProfileData, value: string) {
     setForm(prev => ({ ...prev, [field]: value }));
