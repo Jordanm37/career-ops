@@ -25,8 +25,8 @@ interface ScanStats {
 }
 
 interface PortalInfo {
-  companies: number;
-  titleFilter: number;
+  companies: { name: string; careers_url: string; hasApi: boolean; scanMethod: string }[];
+  titleFilter: { positive: string[]; negative: string[]; seniority_boost: string[] };
   queryCount: number;
 }
 
@@ -406,11 +406,13 @@ export default function Scanner({ onClose }: ScannerProps) {
                   <>
                     <div className="flex justify-between text-xs">
                       <span className="text-ctp-subtext0">Companies configured</span>
-                      <span className="text-ctp-text font-medium tabular-nums">{portals.companies}</span>
+                      <span className="text-ctp-text font-medium tabular-nums">{portals.companies.length}</span>
                     </div>
                     <div className="flex justify-between text-xs">
                       <span className="text-ctp-subtext0">Title filters</span>
-                      <span className="text-ctp-text font-medium tabular-nums">{portals.titleFilter}</span>
+                      <span className="text-ctp-text font-medium tabular-nums">
+                        {portals.titleFilter.positive.length}+ / {portals.titleFilter.negative.length}−
+                      </span>
                     </div>
                     <div className="flex justify-between text-xs">
                       <span className="text-ctp-subtext0">Search queries</span>
