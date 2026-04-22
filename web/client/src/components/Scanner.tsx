@@ -48,6 +48,7 @@ export default function Scanner({ onClose }: ScannerProps) {
   const [portals, setPortals] = useState<PortalInfo | null>(null);
   const [portalsOpen, setPortalsOpen] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [evaluatingIds, setEvaluatingIds] = useState<Set<number>>(new Set());
 
   const logsEndRef = useRef<HTMLDivElement>(null);
   const esRef = useRef<EventSource | null>(null);
@@ -169,20 +170,51 @@ export default function Scanner({ onClose }: ScannerProps) {
     setLogs((prev) => [...prev, '— Scan cancelled by user —']);
   }
 
-  async function handleAction(id: number, status: 'queued' | 'dismissed') {
+  async function handleDismiss(id: number) {
     try {
       const res = await fetch(`/api/scan/discovered/${id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status }),
+        body: JSON.stringify({ status: 'dismissed' }),
       });
       if (res.ok) {
         setJobs((prev) =>
-          prev.map((j) => (j.id === id ? { ...j, status } : j))
+          prev.map((j) => (j.id === id ? { ...j, status: 'dismissed' } : j))
         );
       }
     } catch {
       // non-fatal
+    }
+  }
+
+  async function handleEvaluate(id: number) {
+    setEvaluatingIds((prev) => new Set(prev).add(id));
+    try {
+      const res = await fetch(`/api/evaluate/from-discovered/${id}`, { method: 'POST' });
+      if (res.ok) {
+        // Drain the SSE stream to completion
+        const reader = res.body?.getReader();
+        if (reader) {
+          while (true) {
+            const { done } = await reader.read();
+            if (done) break;
+          }
+        }
+        setJobs((prev) =>
+          prev.map((j) => (j.id === id ? { ...j, status: 'evaluated' } : j))
+        );
+      } else {
+        const body = await res.json().catch(() => ({}));
+        setError(body.error || 'Evaluation failed');
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Evaluation failed');
+    } finally {
+      setEvaluatingIds((prev) => {
+        const next = new Set(prev);
+        next.delete(id);
+        return next;
+      });
     }
   }
 
@@ -345,12 +377,14 @@ export default function Scanner({ onClose }: ScannerProps) {
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span
                             className={`inline-block px-2 py-0.5 rounded text-xs font-medium ${
-                              job.source === 'api'
-                                ? 'bg-ctp-green/15 text-ctp-green border border-ctp-green/30'
-                                : 'bg-ctp-blue/15 text-ctp-blue border border-ctp-blue/30'
+                              job.source.endsWith('_api')
+                                ? 'text-ctp-green bg-ctp-green/10'
+                                : job.source === 'playwright'
+                                ? 'text-ctp-blue bg-ctp-blue/10'
+                                : 'text-ctp-mauve bg-ctp-mauve/10'
                             }`}
                           >
-                            {job.source === 'api' ? 'API' : 'Playwright'}
+                            {job.source.endsWith('_api') ? 'API' : job.source === 'playwright' ? 'Scrape' : 'Search'}
                           </span>
                         </td>
 
@@ -359,14 +393,16 @@ export default function Scanner({ onClose }: ScannerProps) {
                           {job.status === 'new' ? (
                             <div className="flex items-center justify-end gap-2">
                               <button
-                                onClick={() => handleAction(job.id, 'queued')}
-                                className="px-3 py-1 bg-ctp-blue/15 text-ctp-blue border border-ctp-blue/30 text-xs font-medium rounded-md hover:bg-ctp-blue/25 transition-colors"
+                                onClick={() => handleEvaluate(job.id)}
+                                disabled={evaluatingIds.has(job.id)}
+                                className="px-3 py-1 bg-ctp-blue/15 text-ctp-blue border border-ctp-blue/30 text-xs font-medium rounded-md hover:bg-ctp-blue/25 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                               >
-                                Queue
+                                {evaluatingIds.has(job.id) ? 'Evaluating…' : 'Evaluate'}
                               </button>
                               <button
-                                onClick={() => handleAction(job.id, 'dismissed')}
-                                className="px-3 py-1 bg-ctp-surface1 text-ctp-subtext0 border border-ctp-surface2 text-xs font-medium rounded-md hover:text-ctp-red hover:border-ctp-red/40 transition-colors"
+                                onClick={() => handleDismiss(job.id)}
+                                disabled={evaluatingIds.has(job.id)}
+                                className="px-3 py-1 bg-ctp-surface1 text-ctp-subtext0 border border-ctp-surface2 text-xs font-medium rounded-md hover:text-ctp-red hover:border-ctp-red/40 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                               >
                                 Dismiss
                               </button>
@@ -374,12 +410,12 @@ export default function Scanner({ onClose }: ScannerProps) {
                           ) : (
                             <span
                               className={`text-xs font-medium px-2 py-0.5 rounded ${
-                                job.status === 'queued'
+                                job.status === 'evaluated'
                                   ? 'bg-ctp-green/10 text-ctp-green'
                                   : 'bg-ctp-surface1 text-ctp-overlay0'
                               }`}
                             >
-                              {job.status === 'queued' ? 'Queued' : 'Dismissed'}
+                              {job.status === 'evaluated' ? 'Evaluated' : 'Dismissed'}
                             </span>
                           )}
                         </td>

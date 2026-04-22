@@ -1,5 +1,6 @@
 import { chromium } from 'playwright';
 import { loadPortals, filterTitle } from './portals.mjs';
+import { webSearchJobs } from './search.mjs';
 import {
   insertScanRun, updateScanRun, insertDiscoveredJob,
   insertScanHistory, checkScanHistoryUrl, checkDiscoveredUrl,
@@ -17,7 +18,7 @@ export async function startScan(options = {}, onProgress) {
     throw new Error('Scan already in progress');
   }
 
-  const { titleFilter, trackedCompanies } = loadPortals();
+  const { titleFilter, trackedCompanies, searchQueries } = loadPortals();
   const runResult = insertScanRun('running');
   const runId = Number(runResult.lastInsertRowid);
 
@@ -25,7 +26,7 @@ export async function startScan(options = {}, onProgress) {
     id: runId,
     status: 'running',
     progress: [],
-    stats: { level1: 0, level2: 0, discovered: 0, filtered: 0, duplicates: 0, queued: 0 },
+    stats: { level1: 0, level2: 0, level3: 0, discovered: 0, filtered: 0, duplicates: 0, queued: 0 },
   };
 
   const emit = (msg) => {
@@ -45,12 +46,19 @@ export async function startScan(options = {}, onProgress) {
       browser = null;
     }
 
-    // Separate companies by scan method
-    const greenhouseCompanies = trackedCompanies.filter(c => c.api);
-    const playwrightCompanies = trackedCompanies.filter(c => !c.api && c.careers_url);
+    // Partition companies by scan strategy
+    const greenhouseCompanies = trackedCompanies.filter(c => c.api && c.api.includes('greenhouse'));
+    const ashbyCompanies = trackedCompanies.filter(c => !c.api && c.careers_url?.includes('jobs.ashbyhq.com'));
+    const leverCompanies = trackedCompanies.filter(c => !c.api && c.careers_url?.includes('jobs.lever.co'));
+    const playwrightCompanies = trackedCompanies.filter(c =>
+      !c.api && c.careers_url
+      && !c.careers_url.includes('jobs.ashbyhq.com')
+      && !c.careers_url.includes('jobs.lever.co')
+      && c.scan_method !== 'websearch'
+    );
 
-    // Level 2: Greenhouse API (fast, do first)
-    emit({ type: 'phase', text: 'Level 2: Greenhouse API scan' });
+    // Level 2a: Greenhouse API
+    emit({ type: 'phase', text: 'Level 2a: Greenhouse API scan' });
     for (const company of greenhouseCompanies) {
       try {
         emit({ type: 'info', text: `API: ${company.name}` });
@@ -61,6 +69,32 @@ export async function startScan(options = {}, onProgress) {
         currentScan.stats.level2 += jobs.length;
       } catch (err) {
         emit({ type: 'error', text: `API error ${company.name}: ${err.message}` });
+      }
+    }
+
+    // Level 2b: Ashby API
+    emit({ type: 'phase', text: 'Level 2b: Ashby API scan' });
+    for (const company of ashbyCompanies) {
+      try {
+        emit({ type: 'info', text: `Ashby: ${company.name}` });
+        const jobs = await scanAshbyAPI(company);
+        for (const job of jobs) processDiscoveredJob(job, runId, titleFilter, currentScan.stats, emit);
+        currentScan.stats.level2 += jobs.length;
+      } catch (err) {
+        emit({ type: 'error', text: `Ashby error ${company.name}: ${err.message}` });
+      }
+    }
+
+    // Level 2c: Lever API
+    emit({ type: 'phase', text: 'Level 2c: Lever API scan' });
+    for (const company of leverCompanies) {
+      try {
+        emit({ type: 'info', text: `Lever: ${company.name}` });
+        const jobs = await scanLeverAPI(company);
+        for (const job of jobs) processDiscoveredJob(job, runId, titleFilter, currentScan.stats, emit);
+        currentScan.stats.level2 += jobs.length;
+      } catch (err) {
+        emit({ type: 'error', text: `Lever error ${company.name}: ${err.message}` });
       }
     }
 
@@ -84,6 +118,25 @@ export async function startScan(options = {}, onProgress) {
 
       await context.close();
       await browser.close();
+    }
+
+    // Level 3: WebSearch (profile-driven queries) — only if API key available
+    if (process.env.OPENAI_API_KEY && searchQueries.length > 0) {
+      emit({ type: 'phase', text: 'Level 3: WebSearch discovery' });
+      // Cap queries to avoid runaway cost; prioritize profile-driven queries
+      const prioritized = [...searchQueries].sort((a, b) => (b.profileDriven ? 1 : 0) - (a.profileDriven ? 1 : 0));
+      const maxQueries = Math.min(prioritized.length, 10);
+      for (let i = 0; i < maxQueries; i++) {
+        const q = prioritized[i];
+        try {
+          emit({ type: 'info', text: `Search: ${q.name}` });
+          const jobs = await webSearchJobs(q.query, 10);
+          for (const job of jobs) processDiscoveredJob(job, runId, titleFilter, currentScan.stats, emit);
+          currentScan.stats.level3 += jobs.length;
+        } catch (err) {
+          emit({ type: 'error', text: `Search error ${q.name}: ${err.message}` });
+        }
+      }
     }
 
     // Update run stats
@@ -152,70 +205,68 @@ async function scanGreenhouseAPI(company) {
   }));
 }
 
+async function scanAshbyAPI(company) {
+  const slug = new URL(company.careers_url).pathname.replace(/^\//, '');
+  const res = await fetch(`https://api.ashbyhq.com/posting-api/job-board/${slug}`);
+  if (!res.ok) throw new Error(`Ashby HTTP ${res.status}`);
+  const data = await res.json();
+  return (data.jobs || []).filter(j => j.isListed !== false).map(j => ({
+    title: j.title,
+    url: j.jobUrl,
+    company: company.name,
+    portal: 'Ashby API',
+    source: 'ashby_api',
+  }));
+}
+
+async function scanLeverAPI(company) {
+  const slug = new URL(company.careers_url).pathname.replace(/^\//, '').replace(/\/$/, '');
+  const res = await fetch(`https://api.lever.co/v0/postings/${slug}?mode=json`);
+  if (!res.ok) throw new Error(`Lever HTTP ${res.status}`);
+  const data = await res.json();
+  return (data || []).map(j => ({
+    title: j.text,
+    url: j.hostedUrl,
+    company: company.name,
+    portal: 'Lever API',
+    source: 'lever_api',
+  }));
+}
+
 async function scanWithPlaywright(context, company) {
   const page = await context.newPage();
   const jobs = [];
+  const url = company.careers_url;
 
   try {
-    await page.goto(company.careers_url, { waitUntil: 'domcontentloaded', timeout: 20000 });
-    // Wait for job listings to load (SPA)
-    await page.waitForTimeout(3000);
+    await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 20000 });
 
-    const url = company.careers_url;
-
-    if (url.includes('jobs.ashbyhq.com')) {
-      // Ashby pattern
-      const listings = await page.$$eval('[data-testid="job-list"] a, a[href*="/jobs/"]', els =>
-        els.filter(el => el.href && el.href.includes('/jobs/')).map(el => ({
-          title: el.textContent?.trim() || '',
-          url: el.href,
-        }))
-      );
-      for (const l of listings) {
-        if (l.title && l.url) jobs.push({ ...l, company: company.name, portal: 'Ashby', source: 'playwright' });
-      }
-    } else if (url.includes('jobs.lever.co')) {
-      // Lever pattern
-      const listings = await page.$$eval('.posting', els =>
-        els.map(el => ({
-          title: el.querySelector('.posting-title h5, .posting-name')?.textContent?.trim() || '',
-          url: el.querySelector('a.posting-title, a[href*="/jobs/"]')?.href || el.querySelector('a')?.href || '',
-        }))
-      );
-      for (const l of listings) {
-        if (l.title && l.url) jobs.push({ ...l, company: company.name, portal: 'Lever', source: 'playwright' });
-      }
-    } else if (url.includes('greenhouse.io')) {
-      // Greenhouse board page (HTML, not API)
-      const listings = await page.$$eval('.opening a, [class*="job"] a', els =>
-        els.map(el => ({
-          title: el.textContent?.trim() || '',
-          url: el.href,
-        }))
+    if (url.includes('greenhouse.io')) {
+      await page.waitForSelector('tr.job-post, .opening', { timeout: 10000 }).catch(() => {});
+      const listings = await page.$$eval(
+        'tr.job-post a[href*="/jobs/"], .opening a[href*="/jobs/"]',
+        els => els.map(el => ({ title: el.textContent?.trim() || '', url: el.href }))
       );
       for (const l of listings) {
         if (l.title && l.url) jobs.push({ ...l, company: company.name, portal: 'Greenhouse', source: 'playwright' });
       }
     } else {
-      // Generic fallback — look for job-like links
+      // Generic fallback — tighter link filter, wait for network idle
+      await page.waitForLoadState('networkidle', { timeout: 8000 }).catch(() => {});
       const listings = await page.$$eval('a', els =>
         els.filter(el => {
           const href = el.href || '';
-          const text = el.textContent || '';
-          return (href.includes('/job') || href.includes('/career') || href.includes('/position') || href.includes('/opening'))
-            && text.trim().length > 3 && text.trim().length < 200;
-        }).map(el => ({
-          title: el.textContent?.trim() || '',
-          url: el.href,
-        }))
+          const text = (el.textContent || '').trim();
+          return href.startsWith('http')
+            && (href.match(/\/jobs?\/[a-z0-9-]{3,}/i) || href.match(/\/careers?\/[a-z0-9-]{5,}/i))
+            && text.length > 5 && text.length < 150
+            && !/^(careers?|jobs?|open roles?|apply|view all)$/i.test(text);
+        }).map(el => ({ title: el.textContent?.trim() || '', url: el.href }))
       );
       for (const l of listings) {
         if (l.title && l.url) jobs.push({ ...l, company: company.name, portal: 'Custom', source: 'playwright' });
       }
     }
-  } catch (err) {
-    // Timeout or navigation error — skip this company
-    throw err;
   } finally {
     await page.close();
   }

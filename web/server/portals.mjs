@@ -45,15 +45,10 @@ export function loadPortals() {
     const archs = profile.target_roles?.archetypes;
     if (Array.isArray(archs)) {
       for (const a of archs) {
-        if (a.name) extra.push(a.name);
-      }
-    }
-    // narrative.superpowers
-    const powers = profile.narrative?.superpowers;
-    if (Array.isArray(powers)) {
-      // Only add multi-word superpowers (single words like "fast" are too broad)
-      for (const s of powers) {
-        if (s.includes(' ')) extra.push(s);
+        if (!a.name) continue;
+        for (const part of a.name.split(/[\/,]/).map(s => s.trim()).filter(Boolean)) {
+          extra.push(part);
+        }
       }
     }
 
@@ -64,6 +59,27 @@ export function loadPortals() {
         titleFilter.positive.push(kw);
         existing.add(kw.toLowerCase());
       }
+    }
+
+    // Strip negative keywords that conflict with profile-driven positives
+    const positiveLower = titleFilter.positive.map(k => k.toLowerCase());
+    titleFilter.negative = titleFilter.negative.filter(neg => {
+      const n = neg.toLowerCase();
+      return !positiveLower.some(p => p.includes(n) || n.includes(p));
+    });
+  }
+
+  // Generate profile-driven search queries
+  if (profile) {
+    const country = profile.location?.country;
+    const roles = profile.target_roles?.primary || [];
+    for (const role of roles) {
+      searchQueries.push({
+        name: `Profile — ${role}`,
+        query: `"${role}" ${country || 'remote'} site:jobs.ashbyhq.com OR site:job-boards.greenhouse.io OR site:jobs.lever.co`,
+        enabled: true,
+        profileDriven: true,
+      });
     }
   }
 

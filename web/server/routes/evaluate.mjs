@@ -2,7 +2,7 @@ import { Router } from 'express';
 import OpenAI from 'openai';
 import { readFileSync, existsSync } from 'fs';
 import { resolve } from 'path';
-import { insertApplication, insertReport } from '../db.mjs';
+import { insertApplication, insertReport, getDiscoveredJob, updateDiscoveredJobStatus } from '../db.mjs';
 
 const router = Router();
 
@@ -30,6 +30,7 @@ function buildSystemPrompt() {
     '',
     '## Evaluation Instructions',
     oferta,
+    '\n\nIMPORTANT: Output the entire report in English — all headings, tables, bullet points, tracker notes, and status values MUST be in English regardless of any Spanish text in the instructions above.',
   ].join('\n');
 }
 
@@ -147,6 +148,98 @@ router.post('/', async (req, res) => {
     res.end();
   } catch (err) {
     console.error('Evaluation error:', err.message);
+    if (!res.headersSent) {
+      res.status(500).json({ error: err.message });
+    } else {
+      res.write(`data: ${JSON.stringify({ type: 'error', error: err.message })}\n\n`);
+      res.end();
+    }
+  }
+});
+
+// POST /api/evaluate/from-discovered/:id
+// Fetches the discovered job by ID and runs it through the same evaluation flow.
+router.post('/from-discovered/:id', async (req, res) => {
+  const job = getDiscoveredJob(Number(req.params.id));
+  if (!job) return res.status(404).json({ error: 'Discovered job not found' });
+
+  const apiKey = process.env.OPENAI_API_KEY;
+  if (!apiKey) {
+    return res.status(500).json({ error: 'OPENAI_API_KEY not configured' });
+  }
+
+  try {
+    const client = new OpenAI({ apiKey });
+    const systemPrompt = buildSystemPrompt();
+    const cv = loadFileIfExists(resolve(CAREER_OPS_PATH, 'cv.md'));
+    const articleDigest = loadFileIfExists(resolve(CAREER_OPS_PATH, 'article-digest.md'));
+
+    const userContent = [
+      '## Candidate CV',
+      cv,
+      articleDigest ? `\n## Proof Points\n${articleDigest}` : '',
+      '',
+      '## Job Description to Evaluate',
+      `URL: ${job.url}\n`,
+      '(See URL above)',
+      '',
+      'Generate a complete evaluation report in markdown format with blocks A-F, a score out of 5, and all required fields.',
+      `Company: ${job.company}`,
+      `Role: ${job.title}`,
+    ].join('\n');
+
+    const stream = await client.chat.completions.create({
+      model: process.env.AI_MODEL || 'gpt-4o',
+      messages: [
+        { role: 'system', content: systemPrompt },
+        { role: 'user', content: userContent },
+      ],
+      temperature: 0.3,
+      stream: true,
+    });
+
+    res.setHeader('Content-Type', 'text/event-stream');
+    res.setHeader('Cache-Control', 'no-cache');
+    res.setHeader('Connection', 'keep-alive');
+
+    let fullContent = '';
+
+    for await (const chunk of stream) {
+      const delta = chunk.choices[0]?.delta?.content || '';
+      fullContent += delta;
+      res.write(`data: ${JSON.stringify({ type: 'chunk', content: delta })}\n\n`);
+    }
+
+    const fields = parseReportFields(fullContent);
+    const today = new Date().toISOString().split('T')[0];
+
+    const app = {
+      date: today,
+      company: job.company || fields.company || 'Unknown',
+      role: job.title || fields.role || 'Unknown',
+      score: fields.score,
+      score_raw: fields.score ? `${fields.score}/5` : null,
+      status: 'Evaluated',
+      has_pdf: 0,
+      report_path: null,
+      notes: fields.tldr || '',
+      job_url: job.url || null,
+      archetype: fields.archetype,
+      tldr: fields.tldr,
+      remote: fields.remote,
+      comp_estimate: fields.comp_estimate,
+    };
+
+    const result = insertApplication(app);
+    const appId = result.lastInsertRowid;
+    insertReport(appId, fullContent);
+
+    updateDiscoveredJobStatus(job.id, 'evaluated');
+
+    res.write(`data: ${JSON.stringify({ type: 'done', application_id: appId, ...fields })}\n\n`);
+    res.end();
+  } catch (err) {
+    console.error('Evaluation error (from-discovered):', err.message);
     if (!res.headersSent) {
       res.status(500).json({ error: err.message });
     } else {

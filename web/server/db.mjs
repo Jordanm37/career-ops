@@ -152,6 +152,8 @@ const stmts = {
     INSERT OR IGNORE INTO discovered_jobs (scan_run_id, url, title, company, portal, source, seniority_boost) VALUES (?,?,?,?,?,?,?)
   `),
 
+  getDiscoveredJob: db.prepare('SELECT * FROM discovered_jobs WHERE id = ?'),
+
   listDiscoveredJobs: db.prepare(`
     SELECT * FROM discovered_jobs WHERE status=? ORDER BY seniority_boost DESC, discovered_at DESC
   `),
@@ -291,6 +293,10 @@ export function listDiscoveredJobs(status = 'new') {
 
 export function updateDiscoveredJobStatus(id, status) {
   return stmts.updateDiscoveredJobStatus.run(status, id);
+}
+
+export function getDiscoveredJob(id) {
+  return stmts.getDiscoveredJob.get(id);
 }
 
 export function insertScanHistory(url, portal, title, company, status) {
