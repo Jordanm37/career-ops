@@ -8,6 +8,7 @@ import reportsRouter from './routes/reports.mjs';
 import evaluateRouter from './routes/evaluate.mjs';
 import profileRouter from './routes/profile.mjs';
 import scannerRouter from './routes/scanner.mjs';
+import settingsRouter from './routes/settings.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -23,6 +24,7 @@ app.use('/api/applications', reportsRouter);
 app.use('/api/evaluate', evaluateRouter);
 app.use('/api/profile', profileRouter);
 app.use('/api/scan', scannerRouter);
+app.use('/api/settings', settingsRouter);
 
 // Health check
 app.get('/api/health', (req, res) => {

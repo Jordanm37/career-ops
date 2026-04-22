@@ -1,5 +1,4 @@
-const ADZUNA_APP_ID = process.env.ADZUNA_APP_ID;
-const ADZUNA_APP_KEY = process.env.ADZUNA_APP_KEY;
+import { getSetting } from './db.mjs';
 
 /**
  * Main entry — unified web search for jobs.
@@ -45,7 +44,9 @@ export async function webSearchJobs(query, maxResults = 10, options = {}) {
 }
 
 async function searchAdzuna(query, country, location, maxResults) {
-  if (!ADZUNA_APP_ID || !ADZUNA_APP_KEY) return [];
+  const appId = getSetting('ADZUNA_APP_ID');
+  const appKey = getSetting('ADZUNA_APP_KEY');
+  if (!appId || !appKey) return [];
 
   // Expand query with a senior variant to broaden coverage
   const variants = [query, `Senior ${query}`];
@@ -53,8 +54,8 @@ async function searchAdzuna(query, country, location, maxResults) {
   const allResults = [];
   for (const q of variants) {
     const url = new URL(`https://api.adzuna.com/v1/api/jobs/${country}/search/1`);
-    url.searchParams.set('app_id', ADZUNA_APP_ID);
-    url.searchParams.set('app_key', ADZUNA_APP_KEY);
+    url.searchParams.set('app_id', appId);
+    url.searchParams.set('app_key', appKey);
     url.searchParams.set('results_per_page', '20');
     url.searchParams.set('what', q);
     if (location) url.searchParams.set('where', location);
@@ -82,7 +83,7 @@ async function searchAdzuna(query, country, location, maxResults) {
 }
 
 async function searchOpenAI(query, maxResults) {
-  const apiKey = process.env.OPENAI_API_KEY;
+  const apiKey = getSetting('OPENAI_API_KEY');
   if (!apiKey) return [];
 
   const { default: OpenAI } = await import('openai');

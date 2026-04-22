@@ -98,6 +98,12 @@ db.exec(`
     created_at TEXT DEFAULT (datetime('now')),
     UNIQUE(name, careers_url)
   );
+
+  CREATE TABLE IF NOT EXISTS settings (
+    key TEXT PRIMARY KEY,
+    value TEXT NOT NULL,
+    updated_at TEXT DEFAULT (datetime('now'))
+  );
 `);
 
 // Prepared statements
@@ -189,6 +195,11 @@ const stmts = {
   listCustomCompanies: db.prepare('SELECT * FROM custom_companies WHERE enabled = 1 ORDER BY category, name'),
   insertCustomCompany: db.prepare('INSERT INTO custom_companies (name, careers_url, api, category, scan_method) VALUES (?, ?, ?, ?, ?)'),
   deleteCustomCompany: db.prepare('DELETE FROM custom_companies WHERE id = ?'),
+
+  getSetting: db.prepare('SELECT value FROM settings WHERE key = ?'),
+  upsertSetting: db.prepare("INSERT INTO settings (key, value, updated_at) VALUES (?, ?, datetime('now')) ON CONFLICT(key) DO UPDATE SET value = excluded.value, updated_at = datetime('now')"),
+  deleteSetting: db.prepare('DELETE FROM settings WHERE key = ?'),
+  listSettings: db.prepare('SELECT key, value, updated_at FROM settings'),
 };
 
 // Normalize status to canonical form (ported from Go)
@@ -332,5 +343,19 @@ export function insertCustomCompany(name, careers_url, api, category, scan_metho
   return stmts.insertCustomCompany.run(name, careers_url, api || null, category, scan_method || null);
 }
 export function deleteCustomCompany(id) { return stmts.deleteCustomCompany.run(id); }
+
+export function getSetting(key) {
+  const row = stmts.getSetting.get(key);
+  return row?.value || process.env[key] || null;
+}
+export function upsertSetting(key, value) {
+  return stmts.upsertSetting.run(key, value);
+}
+export function deleteSetting(key) {
+  return stmts.deleteSetting.run(key);
+}
+export function listSettings() {
+  return stmts.listSettings.all();
+}
 
 export { db };

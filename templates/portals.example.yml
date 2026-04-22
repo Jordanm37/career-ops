@@ -870,9 +870,9 @@ tracked_companies:
     enabled: true
 
   - name: Sierra Space
-    careers_url: https://jobs.lever.co/sierra-space
+    careers_url: https://www.sierraspace.com/careers/
     scan_method: websearch
-    scan_query: 'site:jobs.lever.co/sierra-space "Mechanical Engineer" OR "Aerospace" OR "Systems Engineer"'
+    scan_query: '"Sierra Space" careers "Mechanical Engineer" OR "Aerospace" OR "Systems Engineer"'
     notes: "Louisville CO. Commercial space station (LIFE habitat), Dream Chaser spaceplane."
     category: "Aerospace"
     enabled: true

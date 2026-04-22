@@ -8,6 +8,7 @@ import EvaluateForm from './components/EvaluateForm';
 import ProfileSetup from './components/ProfileSetup';
 import GuidePopup from './components/GuidePopup';
 import Scanner from './components/Scanner';
+import SettingsModal from './components/SettingsModal';
 
 export default function App() {
   const [apps, setApps] = useState<Application[]>([]);
@@ -19,6 +20,7 @@ export default function App() {
   const [showProfile, setShowProfile] = useState(false);
   const [hasProfile, setHasProfile] = useState<boolean | null>(null);
   const [showScanner, setShowScanner] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
   const [loading, setLoading] = useState(true);
 
   const loadData = useCallback(async () => {
@@ -68,6 +70,13 @@ export default function App() {
           </span>
         </div>
         <div className="flex items-center gap-3">
+          <button
+            onClick={() => setShowSettings(true)}
+            className="bg-ctp-surface1 text-ctp-subtext1 px-3 py-1.5 rounded-lg text-sm font-medium hover:opacity-90 transition-opacity"
+            title="Settings"
+          >
+            ⚙️
+          </button>
           <button
             onClick={() => setShowProfile(true)}
             className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-opacity hover:opacity-90 ${
@@ -159,6 +168,11 @@ export default function App() {
       {/* Scanner modal */}
       {showScanner && (
         <Scanner onClose={() => setShowScanner(false)} />
+      )}
+
+      {/* Settings modal */}
+      {showSettings && (
+        <SettingsModal onClose={() => setShowSettings(false)} />
       )}
 
       {/* Help guide */}
