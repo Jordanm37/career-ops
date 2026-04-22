@@ -181,22 +181,22 @@ async function clickByText(page, text, opts = {}) {
     console.log('\n=== Test 4: Profile button ===');
     try {
       const label = await clickByText(page, 'profile');
-      await sleep(1500);
+      await sleep(1800);
       const modal = await page.evaluate(() => {
-        const fixed = Array.from(document.querySelectorAll('div')).filter(d => {
-          const cls = typeof d.className === 'string' ? d.className : '';
-          return cls.includes('fixed') && cls.includes('z-') && d.offsetParent !== null && d.getBoundingClientRect().width > 300;
-        });
-        if (!fixed.length) return { found: false };
-        // pick deepest visible
-        const top = fixed[fixed.length - 1];
-        return { found: true, text: (top.innerText || '').slice(0, 800) };
+        const bodyText = document.body.innerText;
+        const hasProfileSetup = bodyText.includes('Profile Setup');
+        const inputs = Array.from(document.querySelectorAll('input')).map(i => ({ value: i.value, type: i.type, placeholder: i.placeholder }));
+        const panosInInput = inputs.some(i => (i.value || '').toLowerCase().includes('panos'));
+        const panosInText = bodyText.toLowerCase().includes('panos');
+        // Detect which step is active: on Personal step, text includes "pre-filled your details" or fields like "Full Name"
+        const onPersonalStep = bodyText.includes('Full Name') || bodyText.includes('pre-filled your details');
+        const onCvStep = bodyText.toLowerCase().includes('drag') && bodyText.toLowerCase().includes('pdf') ||
+                         bodyText.toLowerCase().includes('upload your cv');
+        return { hasProfileSetup, panosInInput, panosInText, onPersonalStep, onCvStep, inputCount: inputs.length };
       });
-      const hasPanos = (modal.text || '').toLowerCase().includes('panos');
-      const isCvStep = (modal.text || '').toLowerCase().includes('upload cv') || (modal.text || '').toLowerCase().includes('drag') && (modal.text || '').toLowerCase().includes('pdf');
-      const isPersonal = (modal.text || '').toLowerCase().includes('personal') || (modal.text || '').toLowerCase().includes('first name') || (modal.text || '').toLowerCase().includes('name');
-      log('4. Profile button', (modal.found && hasPanos) ? 'PASS' : 'PARTIAL',
-        `clickedLabel="${label}" modalFound=${modal.found} hasPanos=${hasPanos} isPersonalStep=${isPersonal} onCvStep=${isCvStep}`);
+      const pass4 = modal.hasProfileSetup && modal.panosInInput && modal.onPersonalStep && !modal.onCvStep;
+      log('4. Profile button', pass4 ? 'PASS' : 'PARTIAL',
+        `clickedLabel="${label}" modalOpen=${modal.hasProfileSetup} panosPrefilled=${modal.panosInInput} onPersonal=${modal.onPersonalStep} onCv=${modal.onCvStep} inputCount=${modal.inputCount}`);
       await page.screenshot({ path: 'C:\\dev\\GitHub\\career-ops\\web\\test-profile-modal.png' });
       await closeAnyModal(page);
     } catch (e) {

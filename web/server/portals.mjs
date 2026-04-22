@@ -108,10 +108,20 @@ export function loadPortals() {
   return { titleFilter, searchQueries, trackedCompanies, profileMerged: !!profile, categories };
 }
 
+// Word-boundary match — "Agent" won't match "Agenti", "AI" won't match "maintain"
+function matchesKeyword(text, keyword) {
+  const kw = keyword.toLowerCase();
+  // Escape regex special chars in keyword
+  const escaped = kw.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  // Word boundary match; allow multi-word phrases
+  const re = new RegExp(`(^|[^a-z0-9])${escaped}([^a-z0-9]|$)`, 'i');
+  return re.test(text);
+}
+
 export function filterTitle(title, titleFilter) {
   const t = title.toLowerCase();
-  const hasPositive = titleFilter.positive.some(kw => t.includes(kw.toLowerCase()));
-  const hasNegative = titleFilter.negative.some(kw => t.includes(kw.toLowerCase()));
-  const hasSeniority = titleFilter.seniority_boost.some(kw => t.includes(kw.toLowerCase()));
+  const hasPositive = titleFilter.positive.some(kw => matchesKeyword(t, kw));
+  const hasNegative = titleFilter.negative.some(kw => matchesKeyword(t, kw));
+  const hasSeniority = titleFilter.seniority_boost.some(kw => matchesKeyword(t, kw));
   return { pass: hasPositive && !hasNegative, seniority: hasSeniority };
 }

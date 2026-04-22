@@ -509,8 +509,10 @@ tracked_companies:
     enabled: true
 
   - name: Weights & Biases
-    careers_url: https://jobs.lever.co/wandb
-    notes: "MLOps platform."
+    careers_url: https://wandb.ai/site/careers
+    scan_method: websearch
+    scan_query: '"Weights and Biases" OR "wandb" careers "Engineer"'
+    notes: "MLOps platform. Lever board retired."
     category: "AI"
     enabled: true
 
@@ -795,8 +797,10 @@ tracked_companies:
     enabled: true
 
   - name: Vinted
-    careers_url: https://jobs.lever.co/vinted
-    notes: "Vilnius LT / Berlin. C2C marketplace unicorn, data science & ML roles."
+    careers_url: https://www.vinted.com/jobs
+    scan_method: websearch
+    scan_query: '"Vinted" careers "Engineer" OR "Data Scientist" OR "ML"'
+    notes: "Vilnius LT / Berlin. C2C marketplace unicorn. Lever board retired."
     category: "Europe"
     enabled: true
 

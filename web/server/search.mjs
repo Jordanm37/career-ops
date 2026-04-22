@@ -178,6 +178,8 @@ async function verifyUrls(jobs) {
 
 async function verifyOne(job) {
   if (!job.url) return null;
+  // Pre-filter: reject obvious bad URLs before making a network call
+  if (job.url.includes('?error=true') || job.url.includes('&error=true')) return null;
   try {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 5000);
@@ -189,6 +191,9 @@ async function verifyOne(job) {
     clearTimeout(timeout);
 
     if (!res.ok) return null;
+
+    // Reject Greenhouse-style "job not found" redirects
+    if (res.url.includes('?error=true') || res.url.includes('&error=true')) return null;
 
     // Filter bare homepages / catch-all career index redirects
     const finalUrl = new URL(res.url);
