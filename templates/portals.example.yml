@@ -64,6 +64,23 @@ title_filter:
     - "Business Systems"
     - "Internal Tools"
     - "Transformation"
+    # -- Mechatronics / Robotics / Engineering roles --
+    - "Mechatronics"
+    - "Mechanical Engineer"
+    - "Robotics Engineer"
+    - "Robotics"
+    - "Control Systems"
+    - "Embedded Systems"
+    - "Automation Engineer"
+    - "Systems Engineer"
+    - "Manufacturing Engineer"
+    - "Aerospace"
+    - "Aerospace Engineer"
+    - "Product Engineer"
+    - "Hardware Engineer"
+    - "Design Engineer"
+    - "R&D Engineer"
+    - "Instrumentation"
   negative:
     # [CUSTOMIZE] Add keywords for roles you want to exclude
     - "Junior"
@@ -74,8 +91,6 @@ title_filter:
     - "Android"
     - "PHP"
     - "Ruby"
-    - "Embedded"
-    - "Firmware"
     - "FPGA"
     - "ASIC"
     - "Blockchain"
@@ -716,4 +731,265 @@ tracked_companies:
     careers_url: https://job-boards.greenhouse.io/amplemarket
     api: https://boards-api.greenhouse.io/v1/boards/amplemarket/jobs
     notes: "Lisbon PT / Remote. AI-native sales platform."
+    enabled: true
+
+  # -- Mechatronics / Robotics / Aerospace / Industrial --
+
+  # -- Aerospace & Defense --
+
+  - name: SpaceX
+    careers_url: https://www.spacex.com/careers
+    scan_method: websearch
+    scan_query: 'site:spacex.com/careers "Mechanical Engineer" OR "Mechatronics" OR "Robotics" OR "Aerospace Engineer"'
+    notes: "Hawthorne CA / Starbase TX. Rockets & spacecraft. Strong mech/avionics engineering."
+    enabled: true
+
+  - name: Blue Origin
+    careers_url: https://www.blueorigin.com/careers
+    scan_method: websearch
+    scan_query: 'site:blueorigin.com/careers "Mechanical Engineer" OR "Aerospace" OR "Systems Engineer"'
+    notes: "Kent WA / Van Horn TX. Commercial space vehicles."
+    enabled: true
+
+  - name: Boeing
+    careers_url: https://jobs.boeing.com
+    scan_method: websearch
+    scan_query: 'site:jobs.boeing.com "Mechanical Engineer" OR "Mechatronics" OR "Systems Engineer" OR "Aerospace"'
+    notes: "Global. Commercial aircraft, defense, space. Large mech/aero engineering org."
+    enabled: true
+
+  - name: Airbus
+    careers_url: https://careers.airbus.com
+    scan_method: websearch
+    scan_query: 'site:careers.airbus.com "Mechanical Engineer" OR "Mechatronics" OR "Aerospace" OR "Systems Engineer"'
+    notes: "Toulouse FR / Hamburg DE / Filton UK / global. Commercial aircraft & helicopters."
+    enabled: true
+
+  - name: Lockheed Martin
+    careers_url: https://www.lockheedmartinjobs.com
+    scan_method: websearch
+    scan_query: 'site:lockheedmartinjobs.com "Mechanical Engineer" OR "Systems Engineer" OR "Aerospace" OR "Mechatronics"'
+    notes: "Bethesda MD / global. Defense, space, aeronautics. Large engineering org."
+    enabled: true
+
+  - name: Northrop Grumman
+    careers_url: https://www.northropgrumman.com/careers
+    scan_method: websearch
+    scan_query: 'site:northropgrumman.com/careers "Mechanical Engineer" OR "Systems Engineer" OR "Aerospace" OR "Robotics"'
+    notes: "Falls Church VA / global. Defense & space systems."
+    enabled: true
+
+  - name: Raytheon (RTX)
+    careers_url: https://careers.rtx.com
+    scan_method: websearch
+    scan_query: 'site:careers.rtx.com "Mechanical Engineer" OR "Systems Engineer" OR "Aerospace" OR "Mechatronics"'
+    notes: "Arlington VA / global. Defense tech, missiles, sensors, avionics."
+    enabled: true
+
+  - name: Sierra Space
+    careers_url: https://jobs.lever.co/sierra-space
+    scan_method: websearch
+    scan_query: 'site:jobs.lever.co/sierra-space "Mechanical Engineer" OR "Aerospace" OR "Systems Engineer"'
+    notes: "Louisville CO. Commercial space station (LIFE habitat), Dream Chaser spaceplane."
+    enabled: true
+
+  - name: Rocket Lab
+    careers_url: https://www.rocketlabusa.com/careers
+    scan_method: websearch
+    scan_query: 'site:rocketlabusa.com/careers "Mechanical Engineer" OR "Aerospace" OR "Systems Engineer" OR "Manufacturing"'
+    notes: "Long Beach CA / Auckland NZ / Wallops VA. Small launch vehicles & spacecraft."
+    enabled: true
+
+  # -- Automotive & EV --
+
+  - name: Tesla
+    careers_url: https://www.tesla.com/careers
+    scan_method: websearch
+    scan_query: 'site:tesla.com/careers "Mechanical Engineer" OR "Mechatronics" OR "Manufacturing Engineer" OR "Robotics"'
+    notes: "Fremont CA / Austin TX / Sparks NV / global. EV, energy storage, Optimus robot."
+    enabled: true
+
+  - name: Rivian
+    careers_url: https://rivian.com/careers
+    scan_method: websearch
+    scan_query: 'site:rivian.com/careers "Mechanical Engineer" OR "Mechatronics" OR "Manufacturing" OR "Systems Engineer"'
+    notes: "Irvine CA / Normal IL. Electric adventure vehicles & commercial vans."
+    enabled: true
+
+  - name: Lucid Motors
+    careers_url: https://lucidmotors.com/careers
+    scan_method: websearch
+    scan_query: 'site:lucidmotors.com/careers "Mechanical Engineer" OR "Mechatronics" OR "Manufacturing" OR "Systems Engineer"'
+    notes: "Newark CA / Casa Grande AZ. Luxury EV maker."
+    enabled: true
+
+  - name: Ford
+    careers_url: https://corporate.ford.com/careers.html
+    scan_method: websearch
+    scan_query: 'site:ford.com "Mechanical Engineer" OR "Mechatronics" OR "Manufacturing Engineer" OR "Systems Engineer"'
+    notes: "Dearborn MI / global. ICE & EV (F-150 Lightning, Mustang Mach-E). Large mech eng org."
+    enabled: true
+
+  - name: General Motors
+    careers_url: https://search-careers.gm.com
+    scan_method: websearch
+    scan_query: 'site:search-careers.gm.com "Mechanical Engineer" OR "Mechatronics" OR "Manufacturing" OR "Systems Engineer"'
+    notes: "Detroit MI / global. Ultium EV platform, large manufacturing engineering org."
+    enabled: true
+
+  - name: Waymo
+    careers_url: https://waymo.com/careers
+    scan_method: websearch
+    scan_query: 'site:waymo.com/careers "Mechanical Engineer" OR "Systems Engineer" OR "Robotics" OR "Automation"'
+    notes: "Mountain View CA. Autonomous driving — Alphabet subsidiary. Strong robotics/systems eng."
+    enabled: true
+
+  # -- Robotics --
+
+  - name: Boston Dynamics
+    careers_url: https://www.bostondynamics.com/careers
+    scan_method: websearch
+    scan_query: 'site:bostondynamics.com/careers "Mechanical Engineer" OR "Robotics" OR "Control Systems" OR "Mechatronics"'
+    notes: "Waltham MA. Spot, Atlas, Stretch robots. World-class mechatronics/robotics team."
+    enabled: true
+
+  - name: ABB Robotics
+    careers_url: https://careers.abb.com
+    scan_method: websearch
+    scan_query: 'site:careers.abb.com "Mechanical Engineer" OR "Robotics" OR "Automation Engineer" OR "Control Systems"'
+    notes: "Zurich CH / global. Industrial robots, automation & electrification. AU presence."
+    enabled: true
+
+  - name: KUKA
+    careers_url: https://www.kuka.com/en-us/company/careers
+    scan_method: websearch
+    scan_query: 'site:kuka.com "Mechanical Engineer" OR "Robotics" OR "Automation" OR "Mechatronics"'
+    notes: "Augsburg DE / global. Industrial robots & automation systems."
+    enabled: true
+
+  - name: FANUC
+    careers_url: https://www.fanucamerica.com/about-fanuc/careers
+    scan_method: websearch
+    scan_query: 'site:fanucamerica.com "Mechanical Engineer" OR "Robotics" OR "Automation" OR "CNC"'
+    notes: "Oshino JP / Hoffman Estates IL. CNC controllers, robots, factory automation."
+    enabled: true
+
+  # -- Industrial & Manufacturing --
+
+  - name: Siemens
+    careers_url: https://jobs.siemens.com
+    scan_method: websearch
+    scan_query: 'site:jobs.siemens.com "Mechanical Engineer" OR "Mechatronics" OR "Automation Engineer" OR "Systems Engineer"'
+    notes: "Munich DE / global / AU. Industrial automation, motion control, energy. Large AU presence."
+    enabled: true
+
+  - name: Bosch
+    careers_url: https://www.bosch.com/careers
+    scan_method: websearch
+    scan_query: 'site:bosch.com/careers "Mechanical Engineer" OR "Mechatronics" OR "Automation" OR "Manufacturing Engineer"'
+    notes: "Stuttgart DE / global / AU. Automotive components, power tools, industrial tech."
+    enabled: true
+
+  - name: Honeywell
+    careers_url: https://careers.honeywell.com
+    scan_method: websearch
+    scan_query: 'site:careers.honeywell.com "Mechanical Engineer" OR "Systems Engineer" OR "Instrumentation" OR "Control Systems"'
+    notes: "Charlotte NC / global / AU. Aerospace, building tech, process control, safety."
+    enabled: true
+
+  - name: GE Aerospace
+    careers_url: https://jobs.gecareers.com
+    scan_method: websearch
+    scan_query: 'site:jobs.gecareers.com "Mechanical Engineer" OR "Aerospace" OR "Systems Engineer" OR "Manufacturing"'
+    notes: "Cincinnati OH / global. Jet engines, propulsion systems, avionics."
+    enabled: true
+
+  - name: Caterpillar
+    careers_url: https://careers.caterpillar.com
+    scan_method: websearch
+    scan_query: 'site:careers.caterpillar.com "Mechanical Engineer" OR "Design Engineer" OR "Manufacturing Engineer" OR "Systems Engineer"'
+    notes: "Irving TX / Peoria IL / global. Heavy equipment, mining, construction machinery."
+    enabled: true
+
+  - name: 3M
+    careers_url: https://www.3m.com/3M/en_US/careers-us/
+    scan_method: websearch
+    scan_query: 'site:3m.com "Mechanical Engineer" OR "R&D Engineer" OR "Manufacturing Engineer" OR "Product Engineer"'
+    notes: "St. Paul MN / global. Advanced materials, abrasives, filtration, electronics."
+    enabled: true
+
+  # -- Hardware & Consumer Products --
+
+  - name: Apple
+    careers_url: https://www.apple.com/careers/us/
+    scan_method: websearch
+    scan_query: 'site:apple.com/careers "Mechanical Engineer" OR "Hardware Engineer" OR "Systems Engineer" OR "Design Engineer"'
+    notes: "Cupertino CA / global. Consumer electronics hardware — iPhone, Vision Pro, AirPods."
+    enabled: true
+
+  - name: Dyson
+    careers_url: https://careers.dyson.com
+    scan_method: websearch
+    scan_query: 'site:careers.dyson.com "Mechanical Engineer" OR "Design Engineer" OR "R&D Engineer" OR "Mechatronics"'
+    notes: "Malmesbury UK / Singapore / global. Vacuum, air treatment, personal care — strong mech eng."
+    enabled: true
+
+  # -- Medical Devices --
+
+  - name: Medtronic
+    careers_url: https://jobs.medtronic.com
+    scan_method: websearch
+    scan_query: 'site:jobs.medtronic.com "Mechanical Engineer" OR "Systems Engineer" OR "R&D Engineer" OR "Mechatronics"'
+    notes: "Dublin IE / Fridley MN / global / AU. Cardiac, surgical robotics, diabetes devices."
+    enabled: true
+
+  - name: Stryker
+    careers_url: https://careers.stryker.com
+    scan_method: websearch
+    scan_query: 'site:careers.stryker.com "Mechanical Engineer" OR "R&D Engineer" OR "Systems Engineer" OR "Design Engineer"'
+    notes: "Kalamazoo MI / global / AU. Orthopaedic implants, surgical robotics, medical devices."
+    enabled: true
+
+  # -- Australia-focused employers --
+
+  - name: CSIRO
+    careers_url: https://jobs.csiro.au
+    scan_method: websearch
+    scan_query: 'site:jobs.csiro.au "Mechanical Engineer" OR "Mechatronics" OR "Robotics" OR "Systems Engineer"'
+    notes: "Melbourne / Canberra / AU-wide. National science agency. Strong robotics & automation R&D."
+    enabled: true
+
+  - name: Cochlear
+    careers_url: https://www.cochlear.com/au/en/corporate/about-cochlear/careers
+    scan_method: websearch
+    scan_query: 'site:cochlear.com "Mechanical Engineer" OR "R&D Engineer" OR "Systems Engineer" OR "Design Engineer"'
+    notes: "Macquarie Park NSW / AU & global. Cochlear implants. AU-listed med-tech leader."
+    enabled: true
+
+  - name: Telstra
+    careers_url: https://careers.telstra.com
+    scan_method: websearch
+    scan_query: 'site:careers.telstra.com "Systems Engineer" OR "Automation Engineer" OR "Mechatronics" OR "Hardware Engineer"'
+    notes: "Melbourne VIC / AU-wide. National telco. Network engineering & automation roles."
+    enabled: true
+
+  - name: BHP
+    careers_url: https://careers.bhp.com
+    scan_method: websearch
+    scan_query: 'site:careers.bhp.com "Mechanical Engineer" OR "Mechatronics" OR "Automation Engineer" OR "Instrumentation"'
+    notes: "Melbourne VIC / Perth WA / global. Mining giant. Autonomous haulage, process automation."
+    enabled: true
+
+  - name: Rio Tinto
+    careers_url: https://careers.riotinto.com
+    scan_method: websearch
+    scan_query: 'site:careers.riotinto.com "Mechanical Engineer" OR "Automation" OR "Mechatronics" OR "Instrumentation"'
+    notes: "Melbourne VIC / Perth WA / global. Mining. AutoHaul autonomous trains, OT/automation."
+    enabled: true
+
+  - name: ResMed
+    careers_url: https://www.resmed.com/en-us/careers/
+    scan_method: websearch
+    scan_query: 'site:resmed.com/careers "Mechanical Engineer" OR "Systems Engineer" OR "R&D Engineer" OR "Design Engineer"'
+    notes: "Sydney NSW / San Diego CA / global. Sleep apnea & respiratory devices. AU-listed med-tech."
     enabled: true
