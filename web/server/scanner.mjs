@@ -50,9 +50,16 @@ export async function startScan(options = {}, onProgress) {
     }
 
     // Partition companies by scan strategy
-    const greenhouseCompanies = trackedCompanies.filter(c => c.api && c.api.includes('greenhouse'));
-    const ashbyCompanies = trackedCompanies.filter(c => !c.api && c.careers_url?.includes('jobs.ashbyhq.com'));
-    const leverCompanies = trackedCompanies.filter(c => !c.api && c.careers_url?.includes('jobs.lever.co'));
+    // scan_method: 'websearch' skips API/Playwright (handled by Level 3)
+    const greenhouseCompanies = trackedCompanies.filter(c =>
+      c.scan_method !== 'websearch' && c.api && c.api.includes('greenhouse')
+    );
+    const ashbyCompanies = trackedCompanies.filter(c =>
+      c.scan_method !== 'websearch' && !c.api && c.careers_url?.includes('jobs.ashbyhq.com')
+    );
+    const leverCompanies = trackedCompanies.filter(c =>
+      c.scan_method !== 'websearch' && !c.api && c.careers_url?.includes('jobs.lever.co')
+    );
     const playwrightCompanies = trackedCompanies.filter(c =>
       !c.api && c.careers_url
       && !c.careers_url.includes('jobs.ashbyhq.com')
