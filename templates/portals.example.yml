@@ -1104,3 +1104,396 @@ tracked_companies:
     notes: "Sydney NSW / San Diego CA / global. Sleep apnea & respiratory devices. AU-listed med-tech."
     category: "Australia"
     enabled: true
+
+  # -- Australian Tech / SaaS --
+
+  - name: Atlassian
+    careers_url: https://www.atlassian.com/company/careers/all-jobs
+    scan_method: websearch
+    scan_query: 'site:atlassian.com/company/careers "Engineer" OR "AI" OR "Mechatronics" OR "Systems"'
+    notes: "Sydney NSW / global. Jira, Confluence, Trello. Large engineering org. Remote-heavy."
+    category: "Australia"
+    enabled: true
+
+  - name: Canva
+    careers_url: https://www.lifeatcanva.com/en/jobs/
+    scan_method: websearch
+    scan_query: 'site:lifeatcanva.com/en/jobs "Engineer" OR "AI" OR "ML" OR "Robotics"'
+    notes: "Sydney NSW / global. Design platform unicorn. Strong ML/AI engineering team."
+    category: "Australia"
+    enabled: true
+
+  - name: SafetyCulture
+    careers_url: https://jobs.lever.co/safetyculture-2
+    scan_method: websearch
+    scan_query: 'site:jobs.lever.co/safetyculture "Engineer" OR "AI" OR "Systems"'
+    notes: "Sydney NSW. Workplace safety & quality platform. ~1000 employees, growing eng team."
+    category: "Australia"
+    enabled: true
+
+  - name: Culture Amp
+    careers_url: https://www.cultureamp.com/company/careers
+    scan_method: websearch
+    scan_query: 'site:cultureamp.com/company/careers "Engineer" OR "AI" OR "Data"'
+    notes: "Melbourne VIC / global. HR tech / people analytics unicorn. Melbourne HQ."
+    category: "Australia"
+    enabled: true
+
+  - name: Airwallex
+    careers_url: https://careers.airwallex.com/jobs/
+    scan_method: websearch
+    scan_query: 'site:careers.airwallex.com "Engineer" OR "AI" OR "Solutions" OR "Systems"'
+    notes: "Melbourne VIC / global. Fintech unicorn. Payments & FX infrastructure. AU-founded."
+    category: "Australia"
+    enabled: true
+
+  - name: Linktree
+    careers_url: https://jobs.lever.co/linktree
+    scan_method: websearch
+    scan_query: 'site:jobs.lever.co/linktree "Engineer" OR "AI" OR "Data"'
+    notes: "Melbourne VIC / global. Link-in-bio platform. 40M+ users."
+    category: "Australia"
+    enabled: true
+
+  - name: Employment Hero
+    careers_url: https://apply.workable.com/employment-hero/
+    scan_method: websearch
+    scan_query: 'site:apply.workable.com/employment-hero "Engineer" OR "AI" OR "Data" OR "Systems"'
+    notes: "Sydney NSW / global. HR & payroll SaaS unicorn. 900k+ businesses."
+    category: "Australia"
+    enabled: true
+
+  - name: Deputy
+    careers_url: https://www.deputy.com/careers
+    scan_method: websearch
+    scan_query: 'site:deputy.com/careers "Engineer" OR "AI" OR "Systems" OR "Automation"'
+    notes: "Sydney NSW / global. Workforce management platform. 375k+ workplaces."
+    category: "Australia"
+    enabled: true
+
+  - name: Xero
+    careers_url: https://careers.xero.com/jobs/
+    scan_method: websearch
+    scan_query: 'site:careers.xero.com "Engineer" OR "AI" OR "ML" OR "Automation"'
+    notes: "Wellington NZ / Melbourne VIC / global. Cloud accounting. Strong AU engineering teams."
+    category: "Australia"
+    enabled: true
+
+  - name: Immutable
+    careers_url: https://jobs.lever.co/immutable
+    scan_method: websearch
+    scan_query: 'site:jobs.lever.co/immutable "Engineer" OR "AI" OR "Systems"'
+    notes: "Sydney NSW. Web3 gaming platform. Largest Aussie crypto/gaming company."
+    category: "Australia"
+    enabled: true
+
+  - name: Tines
+    careers_url: https://job-boards.greenhouse.io/tines
+    api: https://boards-api.greenhouse.io/v1/boards/tines/jobs
+    notes: "Dublin / Boston / remote. Security automation platform. Greenhouse-based, 32+ roles."
+    category: "Australia"
+    enabled: true
+
+  # -- Australian Defense & Aerospace --
+
+  - name: BAE Systems Australia
+    careers_url: https://jobsearch.baesystems.com/browse-jobs/country/australia
+    scan_method: websearch
+    scan_query: 'site:jobsearch.baesystems.com "australia" "Engineer" OR "Systems" OR "Aerospace" OR "Mechatronics"'
+    notes: "Adelaide SA / Melbourne VIC. Submarines, combat systems, electronic warfare. ASX defence prime."
+    category: "Australia"
+    enabled: true
+
+  - name: Saber Astronautics
+    careers_url: https://www.saberastro.com/careers/
+    scan_method: websearch
+    scan_query: 'site:saberastro.com "careers" OR "positions" "Engineer" OR "Space" OR "Software"'
+    notes: "Sydney NSW / Adelaide SA / Colorado USA. Space situational awareness & operations."
+    category: "Australia"
+    enabled: true
+
+  - name: Gilmour Space Technologies
+    careers_url: https://www.gspace.com/career
+    scan_method: websearch
+    scan_query: 'site:gspace.com/career "Engineer" OR "Propulsion" OR "Avionics" OR "Manufacturing"'
+    notes: "Gold Coast QLD / Bowen QLD. AU-first orbital launch vehicle. Eris rocket program."
+    category: "Australia"
+    enabled: true
+
+  - name: Defence Science and Technology Group (DSTG)
+    careers_url: https://www.dst.defence.gov.au/careers/job-vacancies
+    scan_method: websearch
+    scan_query: 'site:dst.defence.gov.au "careers" "Engineer" OR "Scientist" OR "AI" OR "Autonomous"'
+    notes: "Adelaide SA / Melbourne VIC / Canberra ACT. Government defence R&D. Requires AU citizenship."
+    category: "Australia"
+    enabled: true
+
+  # -- Australian Robotics & Autonomous Systems --
+
+  - name: Advanced Navigation
+    careers_url: https://www.advancednavigation.com/careers/
+    scan_method: websearch
+    scan_query: 'site:advancednavigation.com/careers "Engineer" OR "Navigation" OR "AI" OR "Robotics"'
+    notes: "Sydney NSW. Inertial navigation, GNSS, robotics. Products used in autonomous vehicles & drones."
+    category: "Australia"
+    enabled: true
+
+  - name: Nearmap
+    careers_url: https://www.nearmap.com/au/en/aerial-view-maps-about-us/geospatial-data-careers
+    scan_method: websearch
+    scan_query: 'site:nearmap.com "careers" "Engineer" OR "AI" OR "Computer Vision" OR "Geospatial"'
+    notes: "Sydney NSW. Aerial imagery & AI geospatial analytics. Strong CV/ML engineering team."
+    category: "Australia"
+    enabled: true
+
+  - name: Baraja
+    careers_url: https://www.baraja.com/en/careers
+    scan_method: websearch
+    scan_query: '"baraja" careers "Engineer" OR "LiDAR" OR "Autonomous" site:jobs.swagapp.com OR site:baraja.com'
+    notes: "Sydney NSW. Spectrum-Scan LiDAR for autonomous vehicles. AU deep-tech startup."
+    category: "Australia"
+    enabled: true
+
+  - name: Myriota
+    careers_url: https://myriota.com/careers-and-culture/
+    scan_method: websearch
+    scan_query: 'site:myriota.com "careers" "Engineer" OR "Software" OR "Embedded" OR "Satellite"'
+    notes: "Adelaide SA (Lot Fourteen). Nanosatellite IoT connectivity. Backed by Boeing & Hostplus."
+    category: "Australia"
+    enabled: true
+
+  - name: Presien
+    careers_url: https://www.presien.com/
+    scan_method: websearch
+    scan_query: '"presien" careers "Engineer" OR "AI" OR "Computer Vision" site:jobs.mseq.vc OR site:seek.com.au'
+    notes: "Sydney NSW. AI computer vision for heavy industry (mining, construction). Google AI accelerator."
+    category: "Australia"
+    enabled: true
+
+  # -- Australian Mining Tech & Industrial --
+
+  - name: Fortescue (Future Industries)
+    careers_url: https://careers.fortescue.com/en
+    scan_method: websearch
+    scan_query: 'site:careers.fortescue.com "Engineer" OR "Automation" OR "AI" OR "Mechatronics"'
+    notes: "Perth WA / global. Iron ore + green hydrogen. FFI division: autonomous tech & green energy."
+    category: "Australia"
+    enabled: true
+
+  - name: Woodside Energy
+    careers_url: https://www.woodside.com/careers
+    scan_method: websearch
+    scan_query: 'site:woodside.com/careers "Engineer" OR "Automation" OR "AI" OR "Instrumentation"'
+    notes: "Perth WA / global. LNG & hydrogen. AI/data division, offshore robotics & inspection drones."
+    category: "Australia"
+    enabled: true
+
+  - name: Orica
+    careers_url: https://www.orica.com/careers/careers
+    scan_method: websearch
+    scan_query: 'site:orica.com/careers "Engineer" OR "Automation" OR "Systems" OR "R&D"'
+    notes: "Melbourne VIC / global. Mining explosives & digital blasting tech. Strong R&D engineering."
+    category: "Australia"
+    enabled: true
+
+  - name: Boart Longyear
+    careers_url: https://careers.boartlongyear.com/
+    scan_method: websearch
+    scan_query: 'site:careers.boartlongyear.com "Engineer" OR "Mechanical" OR "Automation" OR "Systems"'
+    notes: "Salt Lake City UT / global / AU. Drilling services & equipment. Large AU mining operations."
+    category: "Australia"
+    enabled: true
+
+  # -- Australian Medical Devices & Biotech --
+
+  - name: CSL
+    careers_url: https://jobs.csl.com/en/jobs
+    scan_method: websearch
+    scan_query: 'site:jobs.csl.com "australia" OR "melbourne" "Engineer" OR "Manufacturing" OR "R&D" OR "Systems"'
+    notes: "Melbourne VIC / global. Plasma therapies & vaccines. AU-listed global biopharma leader."
+    category: "Australia"
+    enabled: true
+
+  - name: Compumedics
+    careers_url: https://www.compumedics.com.au/en/about-compumedics/careers/
+    scan_method: websearch
+    scan_query: 'site:compumedics.com.au "careers" "Engineer" OR "Software" OR "Electronics" OR "R&D"'
+    notes: "Abbotsford VIC. EEG/sleep diagnostic equipment. ASX-listed, globally exporting."
+    category: "Australia"
+    enabled: true
+
+  - name: Nanosonics
+    careers_url: https://www.nanosonics.com.au/about-us/our-story/careers
+    scan_method: websearch
+    scan_query: 'site:nanosonics.com.au "careers" "Engineer" OR "R&D" OR "Software" OR "Systems"'
+    notes: "Sydney NSW. Ultrasound probe disinfection devices. ASX-listed med-tech. Field service eng roles."
+    category: "Australia"
+    enabled: true
+
+  - name: Sonic Healthcare
+    careers_url: https://www.sonichealthplus.com.au/careers
+    scan_method: websearch
+    scan_query: '"sonic healthcare" OR "sonichealthplus" careers "Engineer" OR "Technology" OR "IT" site:seek.com.au OR site:sonichealthplus.com.au'
+    notes: "Sydney NSW / global. Pathology & radiology. ASX Top 50. Large AU healthcare IT needs."
+    category: "Australia"
+    enabled: true
+
+  # -- Australian Automotive / EV --
+
+  - name: Tritium (EV Charging)
+    careers_url: https://tritiumcharging.com/careers/
+    scan_method: websearch
+    scan_query: '"tritium" OR "tritiumcharging" careers "Engineer" OR "Electrical" OR "Embedded" OR "Software" site:seek.com.au OR site:tritiumcharging.com'
+    notes: "Brisbane QLD. DC fast charger manufacturer. R&D team retained in Brisbane. ASX-listed."
+    category: "Australia"
+    enabled: true
+
+  - name: Brighte
+    careers_url: https://brighte.com.au/careers/
+    scan_method: websearch
+    scan_query: 'site:brighte.com.au/careers "Engineer" OR "AI" OR "Data" OR "Software"'
+    notes: "Sydney NSW. Green energy fintech (solar BNPL). Backed by Mike Cannon-Brookes (Grok Ventures)."
+    category: "Australia"
+    enabled: true
+
+  - name: JOLT (EV Charging)
+    careers_url: https://jobs.lever.co/joltcharge
+    scan_method: websearch
+    scan_query: 'site:jobs.lever.co/joltcharge "Engineer" OR "Electrical" OR "Hardware" OR "Embedded"'
+    notes: "Sydney NSW / national. Free EV charging network funded by advertising. Lever-based ATS."
+    category: "Australia"
+    enabled: true
+
+  # -- Australian Banking & Fintech --
+
+  - name: Commonwealth Bank (CBA)
+    careers_url: https://cba.wd3.myworkdayjobs.com/CommBank_Careers
+    scan_method: websearch
+    scan_query: 'site:commbank.com.au/careers "Engineer" OR "AI" OR "Technology" OR "Data Scientist"'
+    notes: "Sydney NSW. Australia's largest bank. OpenAI strategic partner. Large tech & AI org."
+    category: "Australia"
+    enabled: true
+
+  - name: NAB (National Australia Bank)
+    careers_url: https://careers.nab.com.au/mob/en/listing/
+    scan_method: websearch
+    scan_query: 'site:nab.com.au/careers "Engineer" OR "AI" OR "Technology" OR "Data" OR "Automation"'
+    notes: "Melbourne VIC. Major bank. Technology & Digital division. AWS/Azure engineering roles."
+    category: "Australia"
+    enabled: true
+
+  - name: Westpac
+    careers_url: https://www.westpac.com.au/about-westpac/careers/technology/
+    scan_method: websearch
+    scan_query: 'site:westpac.com.au/careers "Engineer" OR "AI" OR "Technology" OR "Robotics" OR "Cloud"'
+    notes: "Sydney NSW. Major bank. Cloud, robotics, cyber & engineering graduate programs."
+    category: "Australia"
+    enabled: true
+
+  - name: Macquarie Group
+    careers_url: https://recruitment.macquarie.com/en_US/careers/FeaturedJobs
+    scan_method: websearch
+    scan_query: 'site:recruitment.macquarie.com "Engineer" OR "AI" OR "Technology" OR "Data" OR "Quant"'
+    notes: "Sydney NSW / global. Investment bank & asset manager. Large technology division."
+    category: "Australia"
+    enabled: true
+
+  - name: Afterpay (Block)
+    careers_url: https://jobs.lever.co/afterpaytouch
+    scan_method: websearch
+    scan_query: 'site:jobs.lever.co/afterpaytouch "Engineer" OR "AI" OR "Data" OR "Systems"'
+    notes: "Melbourne VIC / global. BNPL now part of Block (Jack Dorsey). Engineering roles in AU."
+    category: "Australia"
+    enabled: true
+
+  - name: Zip Co
+    careers_url: https://zip.co/careers
+    scan_method: websearch
+    scan_query: '"zip.co" OR "zipmoney" careers "Engineer" OR "AI" OR "Technology" OR "Data"'
+    notes: "Sydney NSW. BNPL / digital financial services. AU-listed fintech. ASX: ZIP."
+    category: "Australia"
+    enabled: true
+
+  - name: Judo Bank
+    careers_url: https://www.judo.bank/careers/
+    scan_method: websearch
+    scan_query: 'site:judo.bank/careers "Engineer" OR "Technology" OR "Data" OR "Systems"'
+    notes: "Melbourne VIC. SME challenger bank. ASX-listed. Growing technology team."
+    category: "Australia"
+    enabled: true
+
+  # -- Australian Government Tech --
+
+  - name: Australian Signals Directorate (ASD)
+    careers_url: https://www.asd.gov.au/careers
+    scan_method: websearch
+    scan_query: 'site:asd.gov.au/careers "Engineer" OR "AI" OR "Cyber" OR "Systems" OR "Software"'
+    notes: "Canberra ACT. Signals intelligence & cyber security. Requires AU citizenship + clearance."
+    category: "Australia"
+    enabled: true
+
+  - name: Digital Transformation Agency (DTA)
+    careers_url: https://www.dta.gov.au/join-our-team
+    scan_method: websearch
+    scan_query: 'site:dta.gov.au "join-our-team" "Engineer" OR "AI" OR "Technology" OR "Data"'
+    notes: "Canberra ACT / remote. Federal govt digital transformation. Tech & product roles."
+    category: "Australia"
+    enabled: true
+
+  - name: Australia Post (Digital Tech)
+    careers_url: https://jobs.auspost.com.au/en_GB/careers/InDigitalTech
+    scan_method: websearch
+    scan_query: 'site:jobs.auspost.com.au "Engineer" OR "AI" OR "Technology" OR "Data" OR "Automation"'
+    notes: "Melbourne VIC / national. Digital & tech arm. AI Specialist roles, SAP, cloud engineering."
+    category: "Australia"
+    enabled: true
+
+  # -- Australian Universities (Research Engineer Jobs) --
+
+  - name: University of Melbourne
+    careers_url: https://jobs.unimelb.edu.au/
+    scan_method: websearch
+    scan_query: 'site:jobs.unimelb.edu.au "Research Engineer" OR "Research Fellow" OR "AI" OR "Robotics" OR "Systems"'
+    notes: "Melbourne VIC. Top AU university. Research engineer & postdoc roles in AI, robotics, mech eng."
+    category: "Australia"
+    enabled: true
+
+  - name: Monash University
+    careers_url: https://www.monash.edu/jobs
+    scan_method: websearch
+    scan_query: 'site:monash.edu/jobs "Research Engineer" OR "Research Fellow" OR "AI" OR "Robotics" OR "Mechatronics"'
+    notes: "Melbourne VIC / Clayton. Ranked top 50 globally. Strong robotics & AI research programs."
+    category: "Australia"
+    enabled: true
+
+  - name: University of Sydney
+    careers_url: https://usyd.wd3.myworkdayjobs.com/USYD_EXTERNAL_CAREER_SITE
+    scan_method: websearch
+    scan_query: 'site:sydney.edu.au/careers "Research Engineer" OR "Research Fellow" OR "AI" OR "Systems"'
+    notes: "Sydney NSW. Top AU university. Aerospace engineering, robotics, biomedical research roles."
+    category: "Australia"
+    enabled: true
+
+  - name: RMIT University
+    careers_url: https://rmit.wd3.myworkdayjobs.com/RMIT_Careers
+    scan_method: websearch
+    scan_query: 'site:rmit.edu.au/careers "Research Engineer" OR "Research Fellow" OR "AI" OR "Robotics"'
+    notes: "Melbourne VIC / global. Strong applied engineering & design research. Industry partnerships."
+    category: "Australia"
+    enabled: true
+
+  - name: Australian National University (ANU)
+    careers_url: https://www.anu.edu.au/jobs
+    scan_method: websearch
+    scan_query: 'site:anu.edu.au/jobs "Research Engineer" OR "Research Fellow" OR "AI" OR "Systems" OR "Robotics"'
+    notes: "Canberra ACT. Top research university. Space, AI & autonomous systems research groups."
+    category: "Australia"
+    enabled: true
+
+  - name: Data61 (CSIRO)
+    careers_url: https://www.csiro.au/en/careers/career-opportunities/Data61-careers
+    scan_method: websearch
+    scan_query: 'site:jobs.csiro.au "Data61" OR "AI" OR "Machine Learning" OR "Robotics" OR "Computer Vision"'
+    notes: "Sydney NSW / Brisbane QLD / AU-wide. CSIRO's AI & data science division. ~1000 researchers."
+    category: "Australia"
+    enabled: true
