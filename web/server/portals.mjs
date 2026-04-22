@@ -1,6 +1,7 @@
 import { readFileSync, existsSync } from 'fs';
 import { resolve } from 'path';
 import { parse } from 'yaml';
+import { listCustomCompanies } from './db.mjs';
 
 const CAREER_OPS_PATH = process.env.CAREER_OPS_PATH || resolve(import.meta.dirname, '..', '..');
 
@@ -81,6 +82,24 @@ export function loadPortals() {
         profileDriven: true,
       });
     }
+  }
+
+  // Merge custom companies from SQLite
+  try {
+    const custom = listCustomCompanies();
+    for (const c of custom) {
+      trackedCompanies.push({
+        name: c.name,
+        careers_url: c.careers_url,
+        api: c.api || undefined,
+        category: c.category,
+        scan_method: c.scan_method || undefined,
+        enabled: true,
+        custom: true,
+      });
+    }
+  } catch (err) {
+    // DB might not be initialized yet
   }
 
   const categories = [...new Set(trackedCompanies.map(c => c.category).filter(Boolean))].sort();

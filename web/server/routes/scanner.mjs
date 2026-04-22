@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { startScan, getScanStatus, cancelScan } from '../scanner.mjs';
-import { listDiscoveredJobs, updateDiscoveredJobStatus, getLatestScanRun } from '../db.mjs';
+import { listDiscoveredJobs, updateDiscoveredJobStatus, getLatestScanRun, listCustomCompanies, insertCustomCompany, deleteCustomCompany } from '../db.mjs';
 import { loadPortals } from '../portals.mjs';
 
 const router = Router();
@@ -115,6 +115,34 @@ router.get('/portals', (req, res) => {
 router.get('/history', (req, res) => {
   const run = getLatestScanRun();
   res.json(run || { status: 'never_run' });
+});
+
+// GET /api/scan/companies — list custom companies
+router.get('/companies', (req, res) => {
+  res.json(listCustomCompanies());
+});
+
+// POST /api/scan/companies — add a custom company
+router.post('/companies', (req, res) => {
+  const { name, careers_url, api, category, scan_method } = req.body;
+  if (!name || !careers_url || !category) {
+    return res.status(400).json({ error: 'name, careers_url, and category are required' });
+  }
+  try {
+    const result = insertCustomCompany(name.trim(), careers_url.trim(), api?.trim() || null, category.trim(), scan_method?.trim() || null);
+    res.json({ success: true, id: result.lastInsertRowid });
+  } catch (err) {
+    if (err.message?.includes('UNIQUE')) {
+      return res.status(409).json({ error: 'This company already exists' });
+    }
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// DELETE /api/scan/companies/:id — remove a custom company
+router.delete('/companies/:id', (req, res) => {
+  deleteCustomCompany(req.params.id);
+  res.json({ success: true });
 });
 
 export default router;

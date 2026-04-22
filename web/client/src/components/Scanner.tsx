@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
+import CompaniesManager from './CompaniesManager';
 
 interface ScannerProps {
   onClose: () => void;
@@ -51,6 +52,7 @@ export default function Scanner({ onClose }: ScannerProps) {
   const [error, setError] = useState<string | null>(null);
   const [evaluatingIds, setEvaluatingIds] = useState<Set<number>>(new Set());
   const [selectedCategories, setSelectedCategories] = useState<Set<string>>(new Set());
+  const [showManager, setShowManager] = useState(false);
 
   const logsEndRef = useRef<HTMLDivElement>(null);
   const esRef = useRef<EventSource | null>(null);
@@ -230,6 +232,16 @@ export default function Scanner({ onClose }: ScannerProps) {
   const hasJobs = jobs.length > 0;
 
   return (
+    <>
+    {showManager && (
+      <CompaniesManager
+        onClose={() => {
+          setShowManager(false);
+          loadPortals();
+        }}
+        categories={portals?.categories || []}
+      />
+    )}
     <div className="fixed inset-0 z-50 flex items-start justify-center pt-10">
       <div className="absolute inset-0 bg-black/60" onClick={onClose} />
       <div className="relative w-full max-w-4xl max-h-[88vh] flex flex-col bg-ctp-mantle rounded-xl border border-ctp-surface1 shadow-2xl overflow-hidden">
@@ -264,10 +276,10 @@ export default function Scanner({ onClose }: ScannerProps) {
         <div className="overflow-y-auto flex-1 p-6 space-y-6">
 
           {/* Category selector */}
-          {portals?.categories && portals.categories.length > 0 && (
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-medium text-ctp-subtext1">Filter by category</span>
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-medium text-ctp-subtext1">Filter by category</span>
+              <div className="flex items-center gap-3">
                 {selectedCategories.size > 0 && (
                   <button
                     onClick={() => setSelectedCategories(new Set())}
@@ -276,7 +288,16 @@ export default function Scanner({ onClose }: ScannerProps) {
                     Clear ({selectedCategories.size})
                   </button>
                 )}
+                <button
+                  onClick={() => setShowManager(true)}
+                  className="text-xs text-ctp-blue hover:text-ctp-sapphire font-medium"
+                >
+                  Manage Companies
+                </button>
               </div>
+            </div>
+          {portals?.categories && portals.categories.length > 0 && (
+            <>
               <div className="flex flex-wrap gap-1.5">
                 {portals.categories.map((cat) => {
                   const active = selectedCategories.has(cat);
@@ -309,8 +330,9 @@ export default function Scanner({ onClose }: ScannerProps) {
                   ? `All ${portals.companies.length} companies will be scanned.`
                   : `Scanning ${portals.companies.filter((c) => c.category && selectedCategories.has(c.category)).length} companies.`}
               </p>
-            </div>
+            </>
           )}
+          </div>
 
           {/* Scan controls */}
           <div className="flex items-center gap-3">
@@ -529,5 +551,6 @@ export default function Scanner({ onClose }: ScannerProps) {
         </div>
       </div>
     </div>
+    </>
   );
 }

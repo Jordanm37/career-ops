@@ -86,6 +86,18 @@ db.exec(`
     status TEXT NOT NULL,
     UNIQUE(url)
   );
+
+  CREATE TABLE IF NOT EXISTS custom_companies (
+    id INTEGER PRIMARY KEY,
+    name TEXT NOT NULL,
+    careers_url TEXT NOT NULL,
+    api TEXT,
+    category TEXT NOT NULL,
+    scan_method TEXT,
+    enabled INTEGER DEFAULT 1,
+    created_at TEXT DEFAULT (datetime('now')),
+    UNIQUE(name, careers_url)
+  );
 `);
 
 // Prepared statements
@@ -173,6 +185,10 @@ const stmts = {
   checkDiscoveredUrl: db.prepare(`
     SELECT id FROM discovered_jobs WHERE url=?
   `),
+
+  listCustomCompanies: db.prepare('SELECT * FROM custom_companies WHERE enabled = 1 ORDER BY category, name'),
+  insertCustomCompany: db.prepare('INSERT INTO custom_companies (name, careers_url, api, category, scan_method) VALUES (?, ?, ?, ?, ?)'),
+  deleteCustomCompany: db.prepare('DELETE FROM custom_companies WHERE id = ?'),
 };
 
 // Normalize status to canonical form (ported from Go)
@@ -310,5 +326,11 @@ export function checkScanHistoryUrl(url) {
 export function checkDiscoveredUrl(url) {
   return stmts.checkDiscoveredUrl.get(url);
 }
+
+export function listCustomCompanies() { return stmts.listCustomCompanies.all(); }
+export function insertCustomCompany(name, careers_url, api, category, scan_method) {
+  return stmts.insertCustomCompany.run(name, careers_url, api || null, category, scan_method || null);
+}
+export function deleteCustomCompany(id) { return stmts.deleteCustomCompany.run(id); }
 
 export { db };
