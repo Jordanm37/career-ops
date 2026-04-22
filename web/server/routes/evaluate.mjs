@@ -7,6 +7,7 @@ import { insertApplication, insertReport, getDiscoveredJob, updateDiscoveredJobS
 const router = Router();
 
 const CAREER_OPS_PATH = process.env.CAREER_OPS_PATH || resolve(import.meta.dirname, '..', '..', '..');
+const USER_DATA_PATH = process.env.USER_DATA_PATH || CAREER_OPS_PATH;
 
 function loadFileIfExists(path) {
   if (existsSync(path)) return readFileSync(path, 'utf-8');
@@ -74,7 +75,7 @@ async function runEvaluation({ jd_url, jd_text, company, role }, onChunk) {
 
   const client = new OpenAI({ apiKey });
   const systemPrompt = buildSystemPrompt();
-  const cv = loadFileIfExists(resolve(CAREER_OPS_PATH, 'cv.md'));
+  const cv = loadFileIfExists(resolve(USER_DATA_PATH, 'cv.md'));
   const articleDigest = loadFileIfExists(resolve(CAREER_OPS_PATH, 'article-digest.md'));
 
   const userContent = [
@@ -151,7 +152,7 @@ router.post('/', async (req, res) => {
   try {
     const client = new OpenAI({ apiKey });
     const systemPrompt = buildSystemPrompt();
-    const cv = loadFileIfExists(resolve(CAREER_OPS_PATH, 'cv.md'));
+    const cv = loadFileIfExists(resolve(USER_DATA_PATH, 'cv.md'));
     const articleDigest = loadFileIfExists(resolve(CAREER_OPS_PATH, 'article-digest.md'));
 
     const userContent = [
@@ -244,7 +245,7 @@ router.post('/from-discovered/:id', async (req, res) => {
   try {
     const client = new OpenAI({ apiKey });
     const systemPrompt = buildSystemPrompt();
-    const cv = loadFileIfExists(resolve(CAREER_OPS_PATH, 'cv.md'));
+    const cv = loadFileIfExists(resolve(USER_DATA_PATH, 'cv.md'));
     const articleDigest = loadFileIfExists(resolve(CAREER_OPS_PATH, 'article-digest.md'));
 
     const userContent = [

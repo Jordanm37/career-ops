@@ -5,11 +5,12 @@ import { parse } from 'yaml';
 
 const router = Router();
 const CAREER_OPS_PATH = process.env.CAREER_OPS_PATH || resolve(import.meta.dirname, '..', '..', '..');
+const USER_DATA_PATH = process.env.USER_DATA_PATH || CAREER_OPS_PATH;
 
 // GET /api/cv-sync — check CV vs profile for issues
 router.get('/', (req, res) => {
-  const cvPath = resolve(CAREER_OPS_PATH, 'cv.md');
-  const profilePath = resolve(CAREER_OPS_PATH, 'config', 'profile.yml');
+  const cvPath = resolve(USER_DATA_PATH, 'cv.md');
+  const profilePath = resolve(USER_DATA_PATH, 'config', 'profile.yml');
 
   const issues = [];
 

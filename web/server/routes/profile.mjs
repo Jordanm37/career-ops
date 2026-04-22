@@ -6,6 +6,9 @@ import { stringify } from 'yaml';
 
 const router = Router();
 const CAREER_OPS_PATH = process.env.CAREER_OPS_PATH || resolve(import.meta.dirname, '..', '..', '..');
+// USER_DATA_PATH is where user-specific files (CV, profile) are persisted.
+// On Railway, this should be the mounted /data volume so it survives deploys.
+const USER_DATA_PATH = process.env.USER_DATA_PATH || CAREER_OPS_PATH;
 
 // Cache parsed CV to avoid re-calling LLM on every request
 let cvParseCache = { hash: null, result: null };
@@ -93,11 +96,11 @@ function parseCvRegex(cv) {
 }
 
 function getProfilePath() {
-  return resolve(CAREER_OPS_PATH, 'config', 'profile.yml');
+  return resolve(USER_DATA_PATH, 'config', 'profile.yml');
 }
 
 function getCvPath() {
-  return resolve(CAREER_OPS_PATH, 'cv.md');
+  return resolve(USER_DATA_PATH, 'cv.md');
 }
 
 // GET /api/profile — returns current profile + cv status

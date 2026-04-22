@@ -4,9 +4,10 @@ import { parse } from 'yaml';
 import { listCustomCompanies } from './db.mjs';
 
 const CAREER_OPS_PATH = process.env.CAREER_OPS_PATH || resolve(import.meta.dirname, '..', '..');
+const USER_DATA_PATH = process.env.USER_DATA_PATH || CAREER_OPS_PATH;
 
 function loadProfile() {
-  const profilePath = resolve(CAREER_OPS_PATH, 'config', 'profile.yml');
+  const profilePath = resolve(USER_DATA_PATH, 'config', 'profile.yml');
   if (!existsSync(profilePath)) return null;
   try {
     return parse(readFileSync(profilePath, 'utf-8'));

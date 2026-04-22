@@ -6,6 +6,7 @@ import OpenAI from 'openai';
 
 const router = Router();
 const CAREER_OPS_PATH = process.env.CAREER_OPS_PATH || resolve(import.meta.dirname, '..', '..', '..');
+const USER_DATA_PATH = process.env.USER_DATA_PATH || CAREER_OPS_PATH;
 
 // POST /api/apply/:applicationId — generates answers for application questions
 // body: { questions: string[] } or { questions_text: string (newline-separated) }
@@ -26,7 +27,7 @@ router.post('/:applicationId', async (req, res) => {
   }
 
   const applyPath = resolve(CAREER_OPS_PATH, 'modes', 'apply.md');
-  const cvPath = resolve(CAREER_OPS_PATH, 'cv.md');
+  const cvPath = resolve(USER_DATA_PATH, 'cv.md');
   const applyMode = existsSync(applyPath) ? readFileSync(applyPath, 'utf-8') : '';
   const cv = existsSync(cvPath) ? readFileSync(cvPath, 'utf-8') : '';
 
