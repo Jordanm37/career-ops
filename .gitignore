@@ -42,3 +42,5 @@ web/data/
 web/node_modules/
 web/client/node_modules/
 web/client/dist/
+web/ui-test*.mjs
+web/test-*.png
