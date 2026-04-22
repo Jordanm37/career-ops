@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
 import Markdown from 'react-markdown';
 import { fetchReport, type Application, type Report } from '../lib/api';
+import ContactoModal from './ContactoModal';
+import DeepResearch from './DeepResearch';
+import ApplyAssistant from './ApplyAssistant';
 
 interface Props {
   app: Application;
@@ -11,6 +14,9 @@ export default function ReportPreview({ app, onClose }: Props) {
   const [report, setReport] = useState<Report | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [showContacto, setShowContacto] = useState(false);
+  const [showDeep, setShowDeep] = useState(false);
+  const [showApply, setShowApply] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -91,6 +97,28 @@ export default function ReportPreview({ app, onClose }: Props) {
           </div>
         )}
 
+        {/* Action buttons */}
+        <div className="flex flex-wrap gap-2 px-6 pb-3">
+          <button
+            onClick={() => setShowContacto(true)}
+            className="px-3 py-1.5 bg-ctp-blue/15 border border-ctp-blue/30 text-ctp-blue rounded-lg text-xs font-medium hover:bg-ctp-blue/25 transition-colors"
+          >
+            💬 LinkedIn Message
+          </button>
+          <button
+            onClick={() => setShowDeep(true)}
+            className="px-3 py-1.5 bg-ctp-mauve/15 border border-ctp-mauve/30 text-ctp-mauve rounded-lg text-xs font-medium hover:bg-ctp-mauve/25 transition-colors"
+          >
+            🔍 Deep Research
+          </button>
+          <button
+            onClick={() => setShowApply(true)}
+            className="px-3 py-1.5 bg-ctp-green/15 border border-ctp-green/30 text-ctp-green rounded-lg text-xs font-medium hover:bg-ctp-green/25 transition-colors"
+          >
+            ✍️ Answer Questions
+          </button>
+        </div>
+
         {/* Full report */}
         <div className="px-6 py-4 border-t border-ctp-surface0">
           {loading && <p className="text-ctp-subtext0 animate-pulse">Loading report...</p>}
@@ -102,6 +130,32 @@ export default function ReportPreview({ app, onClose }: Props) {
           )}
         </div>
       </div>
+
+      {/* Action modals */}
+      {showContacto && (
+        <ContactoModal
+          applicationId={app.id}
+          company={app.company}
+          role={app.role}
+          onClose={() => setShowContacto(false)}
+        />
+      )}
+      {showDeep && (
+        <DeepResearch
+          applicationId={app.id}
+          company={app.company}
+          role={app.role}
+          onClose={() => setShowDeep(false)}
+        />
+      )}
+      {showApply && (
+        <ApplyAssistant
+          applicationId={app.id}
+          company={app.company}
+          role={app.role}
+          onClose={() => setShowApply(false)}
+        />
+      )}
     </div>
   );
 }

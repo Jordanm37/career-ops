@@ -9,6 +9,8 @@ import ProfileSetup from './components/ProfileSetup';
 import GuidePopup from './components/GuidePopup';
 import Scanner from './components/Scanner';
 import SettingsModal from './components/SettingsModal';
+import UrlQueue from './components/UrlQueue';
+import CvSyncBanner from './components/CvSyncBanner';
 
 export default function App() {
   const [apps, setApps] = useState<Application[]>([]);
@@ -21,6 +23,7 @@ export default function App() {
   const [hasProfile, setHasProfile] = useState<boolean | null>(null);
   const [showScanner, setShowScanner] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
+  const [showQueue, setShowQueue] = useState(false);
   const [loading, setLoading] = useState(true);
 
   const loadData = useCallback(async () => {
@@ -60,6 +63,7 @@ export default function App() {
 
   return (
     <div className="h-screen flex flex-col bg-ctp-base">
+      <CvSyncBanner />
       {/* Header */}
       <header className="flex items-center justify-between px-4 py-3 bg-ctp-surface0">
         <div className="flex items-center gap-3">
@@ -92,6 +96,12 @@ export default function App() {
             className="bg-ctp-teal text-ctp-crust px-4 py-1.5 rounded-lg text-sm font-medium hover:opacity-90 transition-opacity"
           >
             Scan Jobs
+          </button>
+          <button
+            onClick={() => setShowQueue(true)}
+            className="bg-ctp-mauve text-ctp-crust px-4 py-1.5 rounded-lg text-sm font-medium hover:opacity-90 transition-opacity"
+          >
+            Queue
           </button>
           <button
             onClick={() => setShowEvaluate(true)}
@@ -173,6 +183,11 @@ export default function App() {
       {/* Settings modal */}
       {showSettings && (
         <SettingsModal onClose={() => setShowSettings(false)} />
+      )}
+
+      {/* URL Queue modal */}
+      {showQueue && (
+        <UrlQueue onClose={() => setShowQueue(false)} onEvaluationComplete={loadData} />
       )}
 
       {/* Help guide */}

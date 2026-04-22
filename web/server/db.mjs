@@ -104,6 +104,18 @@ db.exec(`
     value TEXT NOT NULL,
     updated_at TEXT DEFAULT (datetime('now'))
   );
+
+  CREATE TABLE IF NOT EXISTS url_queue (
+    id INTEGER PRIMARY KEY,
+    url TEXT NOT NULL UNIQUE,
+    status TEXT NOT NULL DEFAULT 'pending',
+    company TEXT,
+    role TEXT,
+    application_id INTEGER REFERENCES applications(id),
+    error TEXT,
+    created_at TEXT DEFAULT (datetime('now')),
+    processed_at TEXT
+  );
 `);
 
 // Prepared statements
@@ -200,6 +212,13 @@ const stmts = {
   upsertSetting: db.prepare("INSERT INTO settings (key, value, updated_at) VALUES (?, ?, datetime('now')) ON CONFLICT(key) DO UPDATE SET value = excluded.value, updated_at = datetime('now')"),
   deleteSetting: db.prepare('DELETE FROM settings WHERE key = ?'),
   listSettings: db.prepare('SELECT key, value, updated_at FROM settings'),
+
+  insertQueueUrl: db.prepare('INSERT OR IGNORE INTO url_queue (url) VALUES (?)'),
+  listQueueUrls: db.prepare("SELECT * FROM url_queue ORDER BY CASE status WHEN 'processing' THEN 1 WHEN 'pending' THEN 2 WHEN 'failed' THEN 3 WHEN 'completed' THEN 4 END, id ASC"),
+  getPendingQueueUrl: db.prepare("SELECT * FROM url_queue WHERE status = 'pending' ORDER BY id ASC LIMIT 1"),
+  updateQueueStatus: db.prepare("UPDATE url_queue SET status = ?, company = ?, role = ?, application_id = ?, error = ?, processed_at = datetime('now') WHERE id = ?"),
+  deleteQueueUrl: db.prepare('DELETE FROM url_queue WHERE id = ?'),
+  clearQueueCompleted: db.prepare("DELETE FROM url_queue WHERE status = 'completed'"),
 };
 
 // Normalize status to canonical form (ported from Go)
@@ -357,5 +376,14 @@ export function deleteSetting(key) {
 export function listSettings() {
   return stmts.listSettings.all();
 }
+
+export function insertQueueUrl(url) { return stmts.insertQueueUrl.run(url); }
+export function listQueueUrls() { return stmts.listQueueUrls.all(); }
+export function getPendingQueueUrl() { return stmts.getPendingQueueUrl.get(); }
+export function updateQueueStatus(id, status, company, role, applicationId, error) {
+  return stmts.updateQueueStatus.run(status, company || null, role || null, applicationId || null, error || null, id);
+}
+export function deleteQueueUrl(id) { return stmts.deleteQueueUrl.run(id); }
+export function clearQueueCompleted() { return stmts.clearQueueCompleted.run(); }
 
 export { db };

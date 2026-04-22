@@ -9,6 +9,11 @@ import evaluateRouter from './routes/evaluate.mjs';
 import profileRouter from './routes/profile.mjs';
 import scannerRouter from './routes/scanner.mjs';
 import settingsRouter from './routes/settings.mjs';
+import contactoRouter from './routes/contacto.mjs';
+import queueRouter from './routes/queue.mjs';
+import deepRouter from './routes/deep.mjs';
+import applyRouter from './routes/apply.mjs';
+import cvSyncRouter from './routes/cv-sync.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -25,6 +30,11 @@ app.use('/api/evaluate', evaluateRouter);
 app.use('/api/profile', profileRouter);
 app.use('/api/scan', scannerRouter);
 app.use('/api/settings', settingsRouter);
+app.use('/api/contacto', contactoRouter);
+app.use('/api/queue', queueRouter);
+app.use('/api/deep', deepRouter);
+app.use('/api/apply', applyRouter);
+app.use('/api/cv-sync', cvSyncRouter);
 
 // Health check
 app.get('/api/health', (req, res) => {
