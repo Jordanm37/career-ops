@@ -213,12 +213,14 @@ tracked_companies:
   - name: Anthropic
     careers_url: https://job-boards.greenhouse.io/anthropic
     api: https://boards-api.greenhouse.io/v1/boards/anthropic/jobs
+    category: "AI"
     enabled: true
 
   - name: OpenAI
     careers_url: https://openai.com/careers
     scan_method: websearch
     scan_query: 'site:openai.com/careers "Solutions" OR "Forward Deployed" OR "AI Engineer"'
+    category: "AI"
     enabled: true
 
   # -- Voice AI & Conversational AI --
@@ -227,24 +229,28 @@ tracked_companies:
     careers_url: https://job-boards.eu.greenhouse.io/polyai
     api: https://boards-api.greenhouse.io/v1/boards/polyai/jobs
     notes: "UK. Voice AI for enterprise contact centers."
+    category: "AI"
     enabled: true
 
   - name: Parloa
     careers_url: https://job-boards.eu.greenhouse.io/parloa
     api: https://boards-api.greenhouse.io/v1/boards/parloa/jobs
     notes: "Berlin EMEA. Voice AI enterprise."
+    category: "AI"
     enabled: true
 
   - name: Intercom
     careers_url: https://job-boards.greenhouse.io/intercom
     api: https://boards-api.greenhouse.io/v1/boards/intercom/jobs
     notes: "Dublin EMEA. Fin AI agent."
+    category: "AI"
     enabled: true
 
   - name: Hume AI
     careers_url: https://job-boards.greenhouse.io/humeai
     api: https://boards-api.greenhouse.io/v1/boards/humeai/jobs
     notes: "NYC. Empathic voice AI."
+    category: "AI"
     enabled: true
 
   - name: ElevenLabs
@@ -252,6 +258,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:jobs.ashbyhq.com/elevenlabs'
     notes: "Voice AI TTS leader."
+    category: "AI"
     enabled: true
 
   - name: Deepgram
@@ -259,6 +266,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:deepgram.com/careers OR "deepgram" "Solutions" OR "AI Engineer" site:jobs.ashbyhq.com'
     notes: "STT/TTS APIs."
+    category: "AI"
     enabled: true
 
   - name: Vapi
@@ -266,6 +274,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:jobs.ashbyhq.com/vapi'
     notes: "Voice AI infrastructure."
+    category: "AI"
     enabled: true
 
   - name: Bland AI
@@ -273,6 +282,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:jobs.ashbyhq.com/bland'
     notes: "Voice phone agents. $65M Series B."
+    category: "AI"
     enabled: true
 
   # -- AI-native platforms (FDE/SA teams) --
@@ -282,42 +292,49 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:retool.com/careers "Deployed" OR "AI" OR "Solutions"'
     notes: "London. Popularized Deployed Engineer role."
+    category: "AI"
     enabled: true
 
   - name: Airtable
     careers_url: https://job-boards.greenhouse.io/airtable
     api: https://boards-api.greenhouse.io/v1/boards/airtable/jobs
     notes: "No-code + AI platform."
+    category: "AI"
     enabled: true
 
   - name: Vercel
     careers_url: https://job-boards.greenhouse.io/vercel
     api: https://boards-api.greenhouse.io/v1/boards/vercel/jobs
     notes: "AI SDK, v0.dev. Frontend AI tooling."
+    category: "AI"
     enabled: true
 
   - name: Temporal
     careers_url: https://job-boards.greenhouse.io/temporal
     api: https://boards-api.greenhouse.io/v1/boards/temporal/jobs
     notes: "Workflow orchestration."
+    category: "AI"
     enabled: true
 
   - name: Arize AI
     careers_url: https://job-boards.greenhouse.io/arizeai
     api: https://boards-api.greenhouse.io/v1/boards/arizeai/jobs
     notes: "LLMOps / AI observability."
+    category: "AI"
     enabled: true
 
   - name: RunPod
     careers_url: https://job-boards.greenhouse.io/runpod
     api: https://boards-api.greenhouse.io/v1/boards/runpod/jobs
     notes: "GPU cloud for AI."
+    category: "AI"
     enabled: true
 
   - name: Glean
     careers_url: https://job-boards.greenhouse.io/gleanwork
     api: https://boards-api.greenhouse.io/v1/boards/gleanwork/jobs
     notes: "Enterprise AI search."
+    category: "AI"
     enabled: true
 
   # -- Contact Center AI & CX --
@@ -327,6 +344,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: '"ada.cx" OR "ada" "AI" "Solutions" OR "Engineer" site:jobs.ashbyhq.com OR site:job-boards.greenhouse.io'
     notes: "Toronto + remote. AI customer service."
+    category: "AI"
     enabled: true
 
   - name: LivePerson
@@ -334,6 +352,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:liveperson.com/careers OR "liveperson" "Solutions" OR "AI" site:job-boards.greenhouse.io'
     notes: "Remote EMEA. Conversational AI enterprise."
+    category: "AI"
     enabled: true
 
   - name: Sierra
@@ -341,6 +360,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: '"sierra.ai" "AI" "Forward Deployed" OR "Applied" OR "Solutions" site:jobs.ashbyhq.com'
     notes: "Bret Taylor (ex-CEO Salesforce). AI customer agents."
+    category: "AI"
     enabled: true
 
   - name: Decagon
@@ -348,6 +368,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: '"decagon" "AI" "Forward Deployed" OR "Solutions" site:jobs.ashbyhq.com'
     notes: "AI customer support agents."
+    category: "AI"
     enabled: true
 
   # -- Enterprise comms & contact center --
@@ -357,6 +378,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:talkdesk.com/careers "AI" OR "Solutions Architect" OR "AI Engineer"'
     notes: "Lisbon. Contact center AI. EMEA friendly."
+    category: "Enterprise SaaS"
     enabled: true
 
   - name: Twilio
@@ -364,6 +386,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:twilio.com/company/jobs "AI" OR "Voice" "Solutions" OR "Architect"'
     notes: "Voice/messaging infrastructure."
+    category: "Enterprise SaaS"
     enabled: true
 
   - name: Dialpad
@@ -371,6 +394,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: '"dialpad" "AI" "Solutions" OR "Engineer" site:job-boards.greenhouse.io OR site:jobs.ashbyhq.com'
     notes: "Voice AI for business comms."
+    category: "Enterprise SaaS"
     enabled: true
 
   - name: Gong
@@ -378,6 +402,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:gong.io/careers "AI" OR "Solutions" OR "Architect"'
     notes: "Revenue intelligence with voice AI."
+    category: "Enterprise SaaS"
     enabled: true
 
   - name: Genesys
@@ -385,6 +410,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:genesys.com/careers "AI" "Solutions Architect" OR "AI Engineer"'
     notes: "Contact center cloud + AI."
+    category: "Enterprise SaaS"
     enabled: true
 
   - name: Salesforce
@@ -392,6 +418,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:careers.salesforce.com "Forward Deployed" OR "AI Engineer" OR "Agentforce"'
     notes: "Agentforce = AI agents platform."
+    category: "Enterprise SaaS"
     enabled: true
 
   # -- AI infra & LLMOps --
@@ -401,6 +428,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: '"langfuse" careers OR jobs "engineer" OR "solutions"'
     notes: "Berlin. LLMOps / observability."
+    category: "AI"
     enabled: true
 
   - name: Lindy
@@ -408,6 +436,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: '"lindy.ai" "AI" "Forward Deployed" OR "Solutions" site:jobs.ashbyhq.com'
     notes: "AI agent management platform."
+    category: "AI"
     enabled: true
 
   - name: Cognigy
@@ -415,12 +444,14 @@ tracked_companies:
     scan_method: websearch
     scan_query: '"cognigy" careers "AI" OR "Solutions" OR "Engineer"'
     notes: "Dusseldorf EMEA. Conversational AI enterprise."
+    category: "AI"
     enabled: true
 
   - name: Speechmatics
     careers_url: https://job-boards.greenhouse.io/speechmatics
     api: https://boards-api.greenhouse.io/v1/boards/speechmatics/jobs
     notes: "Cambridge UK. Speech recognition platform."
+    category: "AI"
     enabled: true
 
   # -- No-Code/Low-Code & Automation --
@@ -430,6 +461,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:jobs.ashbyhq.com/n8n'
     notes: "Berlin + remote EU/US. Workflow automation."
+    category: "Automation"
     enabled: true
 
   - name: Zapier
@@ -437,6 +469,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:jobs.ashbyhq.com/zapier'
     notes: "Remote-first. Automation platform leader."
+    category: "Automation"
     enabled: true
 
   - name: Make.com (Celonis)
@@ -444,6 +477,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:make.com/en/careers OR "make.com" "engineer" OR "solutions" site:jobs.ashbyhq.com'
     notes: "Celonis parent company. Automation platform."
+    category: "Automation"
     enabled: true
 
   # -- Ashby-based (Playwright direct) --
@@ -451,16 +485,19 @@ tracked_companies:
   - name: Cohere
     careers_url: https://jobs.ashbyhq.com/cohere
     notes: "AI/LLM provider. Toronto + remote."
+    category: "AI"
     enabled: true
 
   - name: LangChain
     careers_url: https://jobs.ashbyhq.com/langchain
     notes: "LangChain/LangSmith framework."
+    category: "AI"
     enabled: true
 
   - name: Pinecone
     careers_url: https://jobs.ashbyhq.com/pinecone
     notes: "Vector database."
+    category: "AI"
     enabled: true
 
   # -- Lever-based (Playwright direct) --
@@ -468,16 +505,19 @@ tracked_companies:
   - name: Mistral AI
     careers_url: https://jobs.lever.co/mistral
     notes: "Paris. European AI lab."
+    category: "AI"
     enabled: true
 
   - name: Weights & Biases
     careers_url: https://jobs.lever.co/wandb
     notes: "MLOps platform."
+    category: "AI"
     enabled: true
 
   - name: Palantir
     careers_url: https://jobs.lever.co/palantir
     notes: "FDE roles. Mostly US/London."
+    category: "AI"
     enabled: true
 
   # -- European tech (EMEA-friendly) --
@@ -487,6 +527,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:jobs.greenhouse.io/factorial'
     notes: "Barcelona. HR SaaS unicorn."
+    category: "Europe"
     enabled: true
 
   - name: Attio
@@ -494,6 +535,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:attio.com/careers OR site:jobs.ashbyhq.com/attio'
     notes: "Remote EU. AI-native CRM. Series B $52M."
+    category: "Europe"
     enabled: true
 
   - name: Tinybird
@@ -501,6 +543,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:tinybird.co/careers OR site:jobs.ashbyhq.com/tinybird'
     notes: "Remote. Real-time data platform."
+    category: "Europe"
     enabled: true
 
   - name: Clarity AI
@@ -508,6 +551,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:clarity.ai/careers OR site:jobs.lever.co/clarity-ai'
     notes: "Madrid/Remote. Sustainability analytics with AI."
+    category: "Europe"
     enabled: true
 
   - name: Travelperk
@@ -515,6 +559,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:jobs.ashbyhq.com/travelperk'
     notes: "Barcelona. Business travel unicorn."
+    category: "Europe"
     enabled: true
 
   # -- DACH & European AI ecosystem --
@@ -530,6 +575,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:jobs.ashbyhq.com/AlephAlpha'
     notes: "Heidelberg DE. Sovereign European LLM provider, enterprise & government focus."
+    category: "AI"
     enabled: true
 
   - name: DeepL
@@ -537,18 +583,21 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:jobs.ashbyhq.com/DeepL'
     notes: "Cologne DE. Translation & language AI. 60+ open roles, EU/DACH heavy."
+    category: "AI"
     enabled: true
 
   - name: Black Forest Labs
     careers_url: https://job-boards.greenhouse.io/blackforestlabs
     api: https://boards-api.greenhouse.io/v1/boards/blackforestlabs/jobs
     notes: "Freiburg DE / SF. FLUX image models, ex-Stable Diffusion team."
+    category: "AI"
     enabled: true
 
   - name: Helsing
     careers_url: https://job-boards.greenhouse.io/helsing
     api: https://boards-api.greenhouse.io/v1/boards/helsing/jobs
     notes: "Munich / Berlin / London / Paris. Defence AI unicorn. 100+ roles, ML & FDE."
+    category: "AI"
     enabled: true
 
   # -- DACH enterprise & SaaS (AI-heavy) --
@@ -557,24 +606,28 @@ tracked_companies:
     careers_url: https://job-boards.greenhouse.io/celonis
     api: https://boards-api.greenhouse.io/v1/boards/celonis/jobs
     notes: "Munich / NYC. Process intelligence, Applied AI Engineer roles, Field CTOs."
+    category: "Europe - DACH"
     enabled: true
 
   - name: Contentful
     careers_url: https://job-boards.greenhouse.io/contentful
     api: https://boards-api.greenhouse.io/v1/boards/contentful/jobs
     notes: "Berlin / Denver. Headless CMS, AI content workflows."
+    category: "Europe - DACH"
     enabled: true
 
   - name: GetYourGuide
     careers_url: https://job-boards.greenhouse.io/getyourguide
     api: https://boards-api.greenhouse.io/v1/boards/getyourguide/jobs
     notes: "Berlin. Travel marketplace, ML & data platform roles."
+    category: "Europe - DACH"
     enabled: true
 
   - name: HelloFresh
     careers_url: https://job-boards.greenhouse.io/hellofresh
     api: https://boards-api.greenhouse.io/v1/boards/hellofresh/jobs
     notes: "Berlin. Meal kit unicorn, large data/ML org."
+    category: "Europe - DACH"
     enabled: true
 
   # -- DACH fintech --
@@ -583,23 +636,27 @@ tracked_companies:
     careers_url: https://job-boards.greenhouse.io/n26
     api: https://boards-api.greenhouse.io/v1/boards/n26/jobs
     notes: "Berlin / Barcelona. Mobile bank, ~50 roles, ML & risk."
+    category: "Europe - DACH"
     enabled: true
 
   - name: Trade Republic
     careers_url: https://job-boards.greenhouse.io/traderepublicbank
     api: https://boards-api.greenhouse.io/v1/boards/traderepublicbank/jobs
     notes: "Berlin / London / Paris. Neobroker, ~50 roles, platform & data."
+    category: "Europe - DACH"
     enabled: true
 
   - name: SumUp
     careers_url: https://job-boards.greenhouse.io/sumup
     api: https://boards-api.greenhouse.io/v1/boards/sumup/jobs
     notes: "Berlin / London. Payments fintech, EU + LATAM hiring."
+    category: "Europe - DACH"
     enabled: true
 
   - name: Qonto
     careers_url: https://jobs.lever.co/qonto
     notes: "Paris / Berlin / Barcelona / Milan. SMB neobank, MLOps for AI Product roles."
+    category: "Europe - DACH"
     enabled: true
 
   # -- DACH logistics / mobility --
@@ -607,6 +664,7 @@ tracked_companies:
   - name: Forto
     careers_url: https://jobs.lever.co/forto
     notes: "Berlin DE. Digital freight forwarder, product & data roles, German + English."
+    category: "Europe - DACH"
     enabled: true
 
   # -- Switzerland / Austria AI --
@@ -616,12 +674,14 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:jobs.ashbyhq.com/lakera.ai'
     notes: "Zurich CH / SF. AI security & guardrails. Has Forward Deployed Engineer roles."
+    category: "Europe"
     enabled: true
 
   - name: Scandit
     careers_url: https://job-boards.greenhouse.io/scandit
     api: https://boards-api.greenhouse.io/v1/boards/scandit/jobs
     notes: "Zurich CH. Computer vision / smart data capture, ML roles."
+    category: "Europe"
     enabled: true
 
   - name: Cradle
@@ -629,6 +689,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:jobs.ashbyhq.com/cradlebio'
     notes: "Zurich CH / Amsterdam. AI-guided protein design, ML researcher roles."
+    category: "Europe"
     enabled: true
 
   # -- France AI ecosystem --
@@ -638,6 +699,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:apply.workable.com/huggingface'
     notes: "Paris / NYC / Remote. ML hub & open-source models."
+    category: "Europe"
     enabled: true
 
   - name: Photoroom
@@ -645,11 +707,13 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:jobs.ashbyhq.com/photoroom'
     notes: "Paris FR. AI photo editor, Head of CV / Head of ML roles."
+    category: "Europe"
     enabled: true
 
   - name: Pigment
     careers_url: https://jobs.lever.co/pigment
     notes: "Paris FR / NYC / London. AI-powered FP&A planning platform."
+    category: "Europe"
     enabled: true
 
   # -- UK & Ireland AI (EU-friendly hiring) --
@@ -658,24 +722,28 @@ tracked_companies:
     careers_url: https://job-boards.greenhouse.io/wayve
     api: https://boards-api.greenhouse.io/v1/boards/wayve/jobs
     notes: "London UK. Embodied AI for self-driving, ML & robotics roles."
+    category: "Europe"
     enabled: true
 
   - name: Isomorphic Labs
     careers_url: https://job-boards.greenhouse.io/isomorphiclabs
     api: https://boards-api.greenhouse.io/v1/boards/isomorphiclabs/jobs
     notes: "London / Lausanne / Cambridge MA. DeepMind spin-out for drug discovery AI."
+    category: "Europe"
     enabled: true
 
   - name: PhysicsX
     careers_url: https://job-boards.greenhouse.io/physicsx
     api: https://boards-api.greenhouse.io/v1/boards/physicsx/jobs
     notes: "London UK. Physics-informed ML for engineering, ~40 roles."
+    category: "Europe"
     enabled: true
 
   - name: Stability AI
     careers_url: https://job-boards.greenhouse.io/stabilityai
     api: https://boards-api.greenhouse.io/v1/boards/stabilityai/jobs
     notes: "London / SF. Generative AI image/video research lab."
+    category: "Europe"
     enabled: true
 
   - name: Synthesia
@@ -683,6 +751,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:jobs.ashbyhq.com/synthesia OR site:job-boards.greenhouse.io/synthesia'
     notes: "London UK. AI video generation for enterprise, $4B valuation."
+    category: "Europe"
     enabled: true
 
   - name: Faculty
@@ -690,6 +759,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:jobs.ashbyhq.com/faculty'
     notes: "London UK. Applied AI consultancy. 80+ roles, AI Safety / MLE / Delivery."
+    category: "Europe"
     enabled: true
 
   - name: Causaly
@@ -697,6 +767,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:jobs.ashbyhq.com/causaly'
     notes: "London / Athens. Biomedical knowledge graph + AI."
+    category: "Europe"
     enabled: true
 
   # -- Nordics AI --
@@ -706,6 +777,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:jobs.ashbyhq.com/lovable'
     notes: "Stockholm SE. AI app builder (text-to-app), 80+ open roles."
+    category: "Europe"
     enabled: true
 
   - name: Legora
@@ -713,16 +785,19 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:jobs.ashbyhq.com/legora'
     notes: "Stockholm SE / NYC / London. AI-native legal workspace."
+    category: "Europe"
     enabled: true
 
   - name: Spotify
     careers_url: https://jobs.lever.co/spotify
     notes: "Stockholm SE / NYC / London. Audio platform, large ML/personalization org."
+    category: "Europe"
     enabled: true
 
   - name: Vinted
     careers_url: https://jobs.lever.co/vinted
     notes: "Vilnius LT / Berlin. C2C marketplace unicorn, data science & ML roles."
+    category: "Europe"
     enabled: true
 
   # -- Iberia AI --
@@ -731,6 +806,7 @@ tracked_companies:
     careers_url: https://job-boards.greenhouse.io/amplemarket
     api: https://boards-api.greenhouse.io/v1/boards/amplemarket/jobs
     notes: "Lisbon PT / Remote. AI-native sales platform."
+    category: "Europe"
     enabled: true
 
   # -- Mechatronics / Robotics / Aerospace / Industrial --
@@ -742,6 +818,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:spacex.com/careers "Mechanical Engineer" OR "Mechatronics" OR "Robotics" OR "Aerospace Engineer"'
     notes: "Hawthorne CA / Starbase TX. Rockets & spacecraft. Strong mech/avionics engineering."
+    category: "Aerospace"
     enabled: true
 
   - name: Blue Origin
@@ -749,6 +826,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:blueorigin.com/careers "Mechanical Engineer" OR "Aerospace" OR "Systems Engineer"'
     notes: "Kent WA / Van Horn TX. Commercial space vehicles."
+    category: "Aerospace"
     enabled: true
 
   - name: Boeing
@@ -756,6 +834,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:jobs.boeing.com "Mechanical Engineer" OR "Mechatronics" OR "Systems Engineer" OR "Aerospace"'
     notes: "Global. Commercial aircraft, defense, space. Large mech/aero engineering org."
+    category: "Aerospace"
     enabled: true
 
   - name: Airbus
@@ -763,6 +842,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:careers.airbus.com "Mechanical Engineer" OR "Mechatronics" OR "Aerospace" OR "Systems Engineer"'
     notes: "Toulouse FR / Hamburg DE / Filton UK / global. Commercial aircraft & helicopters."
+    category: "Aerospace"
     enabled: true
 
   - name: Lockheed Martin
@@ -770,6 +850,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:lockheedmartinjobs.com "Mechanical Engineer" OR "Systems Engineer" OR "Aerospace" OR "Mechatronics"'
     notes: "Bethesda MD / global. Defense, space, aeronautics. Large engineering org."
+    category: "Aerospace"
     enabled: true
 
   - name: Northrop Grumman
@@ -777,6 +858,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:northropgrumman.com/careers "Mechanical Engineer" OR "Systems Engineer" OR "Aerospace" OR "Robotics"'
     notes: "Falls Church VA / global. Defense & space systems."
+    category: "Aerospace"
     enabled: true
 
   - name: Raytheon (RTX)
@@ -784,6 +866,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:careers.rtx.com "Mechanical Engineer" OR "Systems Engineer" OR "Aerospace" OR "Mechatronics"'
     notes: "Arlington VA / global. Defense tech, missiles, sensors, avionics."
+    category: "Aerospace"
     enabled: true
 
   - name: Sierra Space
@@ -791,6 +874,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:jobs.lever.co/sierra-space "Mechanical Engineer" OR "Aerospace" OR "Systems Engineer"'
     notes: "Louisville CO. Commercial space station (LIFE habitat), Dream Chaser spaceplane."
+    category: "Aerospace"
     enabled: true
 
   - name: Rocket Lab
@@ -798,6 +882,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:rocketlabusa.com/careers "Mechanical Engineer" OR "Aerospace" OR "Systems Engineer" OR "Manufacturing"'
     notes: "Long Beach CA / Auckland NZ / Wallops VA. Small launch vehicles & spacecraft."
+    category: "Aerospace"
     enabled: true
 
   # -- Automotive & EV --
@@ -807,6 +892,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:tesla.com/careers "Mechanical Engineer" OR "Mechatronics" OR "Manufacturing Engineer" OR "Robotics"'
     notes: "Fremont CA / Austin TX / Sparks NV / global. EV, energy storage, Optimus robot."
+    category: "Automotive"
     enabled: true
 
   - name: Rivian
@@ -814,6 +900,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:rivian.com/careers "Mechanical Engineer" OR "Mechatronics" OR "Manufacturing" OR "Systems Engineer"'
     notes: "Irvine CA / Normal IL. Electric adventure vehicles & commercial vans."
+    category: "Automotive"
     enabled: true
 
   - name: Lucid Motors
@@ -821,6 +908,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:lucidmotors.com/careers "Mechanical Engineer" OR "Mechatronics" OR "Manufacturing" OR "Systems Engineer"'
     notes: "Newark CA / Casa Grande AZ. Luxury EV maker."
+    category: "Automotive"
     enabled: true
 
   - name: Ford
@@ -828,6 +916,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:ford.com "Mechanical Engineer" OR "Mechatronics" OR "Manufacturing Engineer" OR "Systems Engineer"'
     notes: "Dearborn MI / global. ICE & EV (F-150 Lightning, Mustang Mach-E). Large mech eng org."
+    category: "Automotive"
     enabled: true
 
   - name: General Motors
@@ -835,6 +924,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:search-careers.gm.com "Mechanical Engineer" OR "Mechatronics" OR "Manufacturing" OR "Systems Engineer"'
     notes: "Detroit MI / global. Ultium EV platform, large manufacturing engineering org."
+    category: "Automotive"
     enabled: true
 
   - name: Waymo
@@ -842,6 +932,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:waymo.com/careers "Mechanical Engineer" OR "Systems Engineer" OR "Robotics" OR "Automation"'
     notes: "Mountain View CA. Autonomous driving — Alphabet subsidiary. Strong robotics/systems eng."
+    category: "Automotive"
     enabled: true
 
   # -- Robotics --
@@ -851,6 +942,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:bostondynamics.com/careers "Mechanical Engineer" OR "Robotics" OR "Control Systems" OR "Mechatronics"'
     notes: "Waltham MA. Spot, Atlas, Stretch robots. World-class mechatronics/robotics team."
+    category: "Robotics"
     enabled: true
 
   - name: ABB Robotics
@@ -858,6 +950,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:careers.abb.com "Mechanical Engineer" OR "Robotics" OR "Automation Engineer" OR "Control Systems"'
     notes: "Zurich CH / global. Industrial robots, automation & electrification. AU presence."
+    category: "Robotics"
     enabled: true
 
   - name: KUKA
@@ -865,6 +958,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:kuka.com "Mechanical Engineer" OR "Robotics" OR "Automation" OR "Mechatronics"'
     notes: "Augsburg DE / global. Industrial robots & automation systems."
+    category: "Robotics"
     enabled: true
 
   - name: FANUC
@@ -872,6 +966,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:fanucamerica.com "Mechanical Engineer" OR "Robotics" OR "Automation" OR "CNC"'
     notes: "Oshino JP / Hoffman Estates IL. CNC controllers, robots, factory automation."
+    category: "Robotics"
     enabled: true
 
   # -- Industrial & Manufacturing --
@@ -881,6 +976,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:jobs.siemens.com "Mechanical Engineer" OR "Mechatronics" OR "Automation Engineer" OR "Systems Engineer"'
     notes: "Munich DE / global / AU. Industrial automation, motion control, energy. Large AU presence."
+    category: "Industrial"
     enabled: true
 
   - name: Bosch
@@ -888,6 +984,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:bosch.com/careers "Mechanical Engineer" OR "Mechatronics" OR "Automation" OR "Manufacturing Engineer"'
     notes: "Stuttgart DE / global / AU. Automotive components, power tools, industrial tech."
+    category: "Industrial"
     enabled: true
 
   - name: Honeywell
@@ -895,6 +992,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:careers.honeywell.com "Mechanical Engineer" OR "Systems Engineer" OR "Instrumentation" OR "Control Systems"'
     notes: "Charlotte NC / global / AU. Aerospace, building tech, process control, safety."
+    category: "Industrial"
     enabled: true
 
   - name: GE Aerospace
@@ -902,6 +1000,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:jobs.gecareers.com "Mechanical Engineer" OR "Aerospace" OR "Systems Engineer" OR "Manufacturing"'
     notes: "Cincinnati OH / global. Jet engines, propulsion systems, avionics."
+    category: "Industrial"
     enabled: true
 
   - name: Caterpillar
@@ -909,6 +1008,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:careers.caterpillar.com "Mechanical Engineer" OR "Design Engineer" OR "Manufacturing Engineer" OR "Systems Engineer"'
     notes: "Irving TX / Peoria IL / global. Heavy equipment, mining, construction machinery."
+    category: "Industrial"
     enabled: true
 
   - name: 3M
@@ -916,6 +1016,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:3m.com "Mechanical Engineer" OR "R&D Engineer" OR "Manufacturing Engineer" OR "Product Engineer"'
     notes: "St. Paul MN / global. Advanced materials, abrasives, filtration, electronics."
+    category: "Industrial"
     enabled: true
 
   # -- Hardware & Consumer Products --
@@ -925,6 +1026,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:apple.com/careers "Mechanical Engineer" OR "Hardware Engineer" OR "Systems Engineer" OR "Design Engineer"'
     notes: "Cupertino CA / global. Consumer electronics hardware — iPhone, Vision Pro, AirPods."
+    category: "Hardware"
     enabled: true
 
   - name: Dyson
@@ -932,6 +1034,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:careers.dyson.com "Mechanical Engineer" OR "Design Engineer" OR "R&D Engineer" OR "Mechatronics"'
     notes: "Malmesbury UK / Singapore / global. Vacuum, air treatment, personal care — strong mech eng."
+    category: "Hardware"
     enabled: true
 
   # -- Medical Devices --
@@ -941,6 +1044,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:jobs.medtronic.com "Mechanical Engineer" OR "Systems Engineer" OR "R&D Engineer" OR "Mechatronics"'
     notes: "Dublin IE / Fridley MN / global / AU. Cardiac, surgical robotics, diabetes devices."
+    category: "Medical"
     enabled: true
 
   - name: Stryker
@@ -948,6 +1052,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:careers.stryker.com "Mechanical Engineer" OR "R&D Engineer" OR "Systems Engineer" OR "Design Engineer"'
     notes: "Kalamazoo MI / global / AU. Orthopaedic implants, surgical robotics, medical devices."
+    category: "Medical"
     enabled: true
 
   # -- Australia-focused employers --
@@ -957,6 +1062,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:jobs.csiro.au "Mechanical Engineer" OR "Mechatronics" OR "Robotics" OR "Systems Engineer"'
     notes: "Melbourne / Canberra / AU-wide. National science agency. Strong robotics & automation R&D."
+    category: "Australia"
     enabled: true
 
   - name: Cochlear
@@ -964,6 +1070,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:cochlear.com "Mechanical Engineer" OR "R&D Engineer" OR "Systems Engineer" OR "Design Engineer"'
     notes: "Macquarie Park NSW / AU & global. Cochlear implants. AU-listed med-tech leader."
+    category: "Australia"
     enabled: true
 
   - name: Telstra
@@ -971,6 +1078,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:careers.telstra.com "Systems Engineer" OR "Automation Engineer" OR "Mechatronics" OR "Hardware Engineer"'
     notes: "Melbourne VIC / AU-wide. National telco. Network engineering & automation roles."
+    category: "Australia"
     enabled: true
 
   - name: BHP
@@ -978,6 +1086,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:careers.bhp.com "Mechanical Engineer" OR "Mechatronics" OR "Automation Engineer" OR "Instrumentation"'
     notes: "Melbourne VIC / Perth WA / global. Mining giant. Autonomous haulage, process automation."
+    category: "Australia"
     enabled: true
 
   - name: Rio Tinto
@@ -985,6 +1094,7 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:careers.riotinto.com "Mechanical Engineer" OR "Automation" OR "Mechatronics" OR "Instrumentation"'
     notes: "Melbourne VIC / Perth WA / global. Mining. AutoHaul autonomous trains, OT/automation."
+    category: "Australia"
     enabled: true
 
   - name: ResMed
@@ -992,4 +1102,5 @@ tracked_companies:
     scan_method: websearch
     scan_query: 'site:resmed.com/careers "Mechanical Engineer" OR "Systems Engineer" OR "R&D Engineer" OR "Design Engineer"'
     notes: "Sydney NSW / San Diego CA / global. Sleep apnea & respiratory devices. AU-listed med-tech."
+    category: "Australia"
     enabled: true

@@ -83,7 +83,9 @@ export function loadPortals() {
     }
   }
 
-  return { titleFilter, searchQueries, trackedCompanies, profileMerged: !!profile };
+  const categories = [...new Set(trackedCompanies.map(c => c.category).filter(Boolean))].sort();
+
+  return { titleFilter, searchQueries, trackedCompanies, profileMerged: !!profile, categories };
 }
 
 export function filterTitle(title, titleFilter) {

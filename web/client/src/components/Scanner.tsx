@@ -25,10 +25,11 @@ interface ScanStats {
 }
 
 interface PortalInfo {
-  companies: { name: string; careers_url: string; hasApi: boolean; scanMethod: string }[];
+  companies: { name: string; careers_url: string; hasApi: boolean; scanMethod: string; category?: string }[];
   titleFilter: { positive: string[]; negative: string[]; seniority_boost: string[] };
   queryCount: number;
   profileMerged: boolean;
+  categories: string[];
 }
 
 const EMPTY_STATS: ScanStats = {
@@ -49,6 +50,7 @@ export default function Scanner({ onClose }: ScannerProps) {
   const [portalsOpen, setPortalsOpen] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [evaluatingIds, setEvaluatingIds] = useState<Set<number>>(new Set());
+  const [selectedCategories, setSelectedCategories] = useState<Set<string>>(new Set());
 
   const logsEndRef = useRef<HTMLDivElement>(null);
   const esRef = useRef<EventSource | null>(null);
@@ -101,7 +103,13 @@ export default function Scanner({ onClose }: ScannerProps) {
     setScanDone(false);
 
     try {
-      const startRes = await fetch('/api/scan/start', { method: 'POST' });
+      const startRes = await fetch('/api/scan/start', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          categories: selectedCategories.size > 0 ? [...selectedCategories] : undefined,
+        }),
+      });
       if (!startRes.ok) {
         const body = await startRes.json().catch(() => ({}));
         setError(body.message || 'Failed to start scan');
@@ -254,6 +262,55 @@ export default function Scanner({ onClose }: ScannerProps) {
 
         {/* Body — scrollable */}
         <div className="overflow-y-auto flex-1 p-6 space-y-6">
+
+          {/* Category selector */}
+          {portals?.categories && portals.categories.length > 0 && (
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-medium text-ctp-subtext1">Filter by category</span>
+                {selectedCategories.size > 0 && (
+                  <button
+                    onClick={() => setSelectedCategories(new Set())}
+                    className="text-xs text-ctp-overlay1 hover:text-ctp-text"
+                  >
+                    Clear ({selectedCategories.size})
+                  </button>
+                )}
+              </div>
+              <div className="flex flex-wrap gap-1.5">
+                {portals.categories.map((cat) => {
+                  const active = selectedCategories.has(cat);
+                  const count = portals.companies.filter((c) => c.category === cat).length;
+                  return (
+                    <button
+                      key={cat}
+                      onClick={() => {
+                        setSelectedCategories((prev) => {
+                          const next = new Set(prev);
+                          if (next.has(cat)) next.delete(cat);
+                          else next.add(cat);
+                          return next;
+                        });
+                      }}
+                      disabled={isRunning}
+                      className={`px-2.5 py-1 rounded-full text-xs font-medium transition-colors disabled:opacity-40 ${
+                        active
+                          ? 'bg-ctp-blue text-ctp-crust'
+                          : 'bg-ctp-surface0 text-ctp-subtext1 hover:bg-ctp-surface1'
+                      }`}
+                    >
+                      {cat} <span className="opacity-60">({count})</span>
+                    </button>
+                  );
+                })}
+              </div>
+              <p className="text-xs text-ctp-overlay0">
+                {selectedCategories.size === 0
+                  ? `All ${portals.companies.length} companies will be scanned.`
+                  : `Scanning ${portals.companies.filter((c) => c.category && selectedCategories.has(c.category)).length} companies.`}
+              </p>
+            </div>
+          )}
 
           {/* Scan controls */}
           <div className="flex items-center gap-3">

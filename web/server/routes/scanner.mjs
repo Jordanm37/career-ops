@@ -12,8 +12,10 @@ router.post('/start', (req, res) => {
     return res.status(409).json({ error: 'Scan already running', scan: status });
   }
 
+  const options = { categories: req.body?.categories };
+
   // Start scan in background, stream progress via SSE on /status
-  startScan().catch(err => console.error('Scan error:', err));
+  startScan(options).catch(err => console.error('Scan error:', err));
 
   res.json({ message: 'Scan started', scanId: getScanStatus()?.id });
 });
@@ -93,17 +95,19 @@ router.patch('/discovered/:id', (req, res) => {
 
 // GET /api/scan/portals — list configured portals
 router.get('/portals', (req, res) => {
-  const { trackedCompanies, titleFilter, searchQueries, profileMerged } = loadPortals();
+  const { trackedCompanies, titleFilter, searchQueries, profileMerged, categories } = loadPortals();
   res.json({
     companies: trackedCompanies.map(c => ({
       name: c.name,
       careers_url: c.careers_url,
       hasApi: !!c.api,
       scanMethod: c.scan_method || (c.api ? 'greenhouse_api' : 'playwright'),
+      category: c.category,
     })),
     titleFilter,
     queryCount: searchQueries.length,
     profileMerged,
+    categories,
   });
 });
 

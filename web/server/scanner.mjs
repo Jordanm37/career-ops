@@ -18,7 +18,10 @@ export async function startScan(options = {}, onProgress) {
     throw new Error('Scan already in progress');
   }
 
-  const { titleFilter, trackedCompanies, searchQueries } = loadPortals();
+  const { titleFilter, trackedCompanies: allCompanies, searchQueries } = loadPortals();
+  const trackedCompanies = Array.isArray(options.categories) && options.categories.length > 0
+    ? allCompanies.filter(c => options.categories.includes(c.category))
+    : allCompanies;
   const runResult = insertScanRun('running');
   const runId = Number(runResult.lastInsertRowid);
 
