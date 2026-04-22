@@ -123,8 +123,9 @@ export async function startScan(options = {}, onProgress) {
       await browser.close();
     }
 
-    // Level 3: WebSearch (profile-driven queries) — only if API key available
-    if (process.env.OPENAI_API_KEY && searchQueries.length > 0) {
+    // Level 3: WebSearch (profile-driven queries) — runs if Adzuna or OpenAI key is present
+    const hasSearchKey = process.env.ADZUNA_APP_ID || process.env.OPENAI_API_KEY;
+    if (hasSearchKey && searchQueries.length > 0) {
       emit({ type: 'phase', text: 'Level 3: WebSearch discovery' });
       // Cap queries to avoid runaway cost; prioritize profile-driven queries
       const prioritized = [...searchQueries].sort((a, b) => (b.profileDriven ? 1 : 0) - (a.profileDriven ? 1 : 0));
@@ -133,7 +134,7 @@ export async function startScan(options = {}, onProgress) {
         const q = prioritized[i];
         try {
           emit({ type: 'info', text: `Search: ${q.name}` });
-          const jobs = await webSearchJobs(q.query, 10);
+          const jobs = await webSearchJobs(q.query, 10, { country: 'au' });
           for (const job of jobs) processDiscoveredJob(job, runId, titleFilter, currentScan.stats, emit);
           currentScan.stats.level3 += jobs.length;
         } catch (err) {
